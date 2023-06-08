@@ -1,0 +1,9 @@
+test
+.editorconfig
+.github
+.idea
+coverage
+scripts
+LICENSE_header.txt
+tsconfig.json
+dist/test

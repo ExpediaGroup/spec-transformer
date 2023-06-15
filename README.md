@@ -33,13 +33,13 @@ console.log(transformedSpecs);
 ### 2. Use spec-transformer as a CLI
 
 ```bash
-npx @expediagroup/spec-transformer cli --help  # Show help, and list all available commands.
+npx -p @expediagroup/spec-transformer cli --help  # Show help, and list all available commands.
 ```
 
 Example:
 
 ```bash
-npx @expediagroup/spec-transformer cli --input specs.yaml --output out.yaml --headers  # Read specs from specs.yaml, remove headers, and write to out.yaml
+npx -p @expediagroup/spec-transformer cli --input specs.yaml --output out.yaml --headers  # Read specs from specs.yaml, remove headers, and write to out.yaml
 ```
 
 ### 3. Build and run spec-transformer locally

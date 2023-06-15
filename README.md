@@ -37,6 +37,7 @@ npx @expediagroup/spec-transformer cli --help  # Show help, and list all availab
 ```
 
 Example:
+
 ```bash
 npx @expediagroup/spec-transformer cli --input specs.yaml --output out.yaml --headers  # Read specs from specs.yaml, remove headers, and write to out.yaml
 ```
@@ -45,7 +46,6 @@ npx @expediagroup/spec-transformer cli --input specs.yaml --output out.yaml --he
 
 ```bash
 npm run build
-npm start
 ```
 
 ### Test
@@ -53,7 +53,3 @@ npm start
 ```bash
 npm test
 ```
-
-## Change Log
-
-See [CHANGELOG.md](CHANGELOG.md)

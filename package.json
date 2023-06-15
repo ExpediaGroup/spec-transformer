@@ -7,13 +7,14 @@
     "url": "https://github.com/ExpediaGroup/spec-transformer.git"
   },
   "main": "index.js",
+  "types": "index.d.ts",
   "bin": {
     "lib": "index.js",
     "cli": "cli.js"
   },
   "scripts": {
     "add-headers": "scripts/add-headers.sh",
-    "build": "npx tsc --pretty",
+    "build": "rm -rf dist && npx tsc --pretty && rm -rf dist/test && cp package.json dist/package.json && cp README.md dist/README.md && cp LICENSE dist/LICENSE && cp CONTRIBUTING.md dist/CONTRIBUTING.md",
     "start": "ts-node index.ts",
     "test": "jest",
     "release": "semantic-release"
@@ -30,6 +31,14 @@
   "contributors": [
     "'Mohammad Noor' AbuKhleif <moh.noor94@gmail.com> (https://github.com/mohnoor94)"
   ],
+  "release": {
+    "branches": [
+      "main"
+    ]
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "license": "Apache-2.0",
   "dependencies": {
     "commander": "10.0.1",

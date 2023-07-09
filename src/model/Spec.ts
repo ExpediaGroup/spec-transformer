@@ -122,13 +122,13 @@ export default class Spec {
 
     const mappings = this.getComponentMappings();
 
-    const setOperationFieldValue = (operationField: Key, operationFieldValue: Value) => {
+    const setOperationFieldValue = (operationFields: Value, operationField: Key, operationFieldValue: Value) => {
       if (operationField === REQUEST_BODY) {
-        return this.buildOneOfRequest(operationFieldValue, mappings);
+        return this.buildOneOfRequest(operationFields, operationFieldValue, mappings);
       }
 
       if (operationField === RESPONSES) {
-        return this.buildOneOfResponse(operationFieldValue, mappings);
+        return this.buildOneOfResponse(operationFields, operationFieldValue, mappings);
       }
 
       return operationFieldValue;
@@ -144,7 +144,7 @@ export default class Spec {
             map(operationFields, (operationField, operationFieldValue) => {
               return [
                 operationField,
-                setOperationFieldValue(operationField, operationFieldValue)
+                setOperationFieldValue(operationFields, operationField, operationFieldValue)
               ];
             })
           ])
@@ -165,7 +165,7 @@ export default class Spec {
     });
   };
 
-  private buildOneOfRequest(operationFieldValue: Value, mappings: Record<Key, Value>): Record<Key, Value> {
+  private buildOneOfRequest(operationFields: Value, operationFieldValue: Value, mappings: Record<Key, Value>): Record<Key, Value> {
     const isDirectRef = this.isRef(operationFieldValue);
     const schemaValue = isDirectRef ? operationFieldValue : operationFieldValue.content['application/json'].schema;
 
@@ -181,6 +181,7 @@ export default class Spec {
       content: {
         ...operationFieldValue.content,
         'application/json': {
+          ...operationFields.requestBody.content['application/json'],
           schema: {
             oneOf: this.buildOneOfList(mappings.get(name))
           }
@@ -189,7 +190,7 @@ export default class Spec {
     };
   }
 
-  private buildOneOfResponse(operationFieldValue: Value, mappings: Record<Key, Value>): Record<Key, Value> {
+  private buildOneOfResponse(operationFields: Value, operationFieldValue: Value, mappings: Record<Key, Value>): Record<Key, Value> {
     return map(operationFieldValue, (response, responseFields) => {
       const isDirectRef = this.isRef(responseFields);
 
@@ -210,6 +211,7 @@ export default class Spec {
         content: {
           ...responseFields.content,
           'application/json': {
+            ...responseFields.content['application/json'],
             schema: {
               oneOf: this.buildOneOfList(mappings.get(name))
             }

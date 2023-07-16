@@ -31,6 +31,13 @@ describe('test HeaderRemovalTransformer', () => {
       type: 'string',
     },
   };
+  const acceptEncodingCapitalizedHeader = {
+    in: 'header',
+    name: 'Accept-Encoding',
+    schema: {
+      type: 'string',
+    },
+  };
   const authorizationHeader = {
     in: 'header',
     name: 'authorization',
@@ -81,6 +88,7 @@ describe('test HeaderRemovalTransformer', () => {
           parameters: [
             acceptHeader,
             acceptEncodingHeader,
+            acceptEncodingCapitalizedHeader,
             authorizationHeader,
             contentTypeHeader,
             userAgentHeader,
@@ -140,6 +148,7 @@ describe('test HeaderRemovalTransformer', () => {
 
     expect(transformedSpecs.paths['/hello'].get.parameters).toEqual([
       acceptEncodingHeader,
+      acceptEncodingCapitalizedHeader,
       authorizationHeader,
       userAgentHeader,
       xCustomHeader,
@@ -157,6 +166,7 @@ describe('test HeaderRemovalTransformer', () => {
     expect(transformer.transform(specs).paths['/hello'].get.parameters).toEqual([
       acceptHeader,
       acceptEncodingHeader,
+      acceptEncodingCapitalizedHeader,
       authorizationHeader,
       contentTypeHeader,
       userAgentHeader,

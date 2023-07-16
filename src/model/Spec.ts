@@ -291,7 +291,7 @@ export default class Spec {
 
   private filterHeaderParameters = (parameters: Value, headersToRemove: string[]) => {
     return parameters.filter(
-      (parameter: Record<Key, Value>) => parameter.in !== HEADER || !headersToRemove.includes(parameter.name)
+      (parameter: Record<Key, Value>) => parameter.in !== HEADER || !this.includesIgnoreCase(headersToRemove, parameter.name)
     );
   };
 
@@ -299,7 +299,7 @@ export default class Spec {
   private filterHeaderComponents = (component: Value, headersToRemove: string[]) => {
     const parts = component['$ref'].match(/#\/components\/(.*)\/(.*)/);
     const parameter = this.specs.components[parts?.[1]][parts?.[2]] ?? {};
-    return parameter?.in === HEADER && headersToRemove.includes(parameter.name) ? {} : component;
+    return parameter?.in === HEADER && this.includesIgnoreCase(headersToRemove, parameter.name) ? {} : component;
   };
 
   private mapTags = (tags: string[]): TagObject[] => tags.map((tag) => ({ name: tag }));
@@ -309,5 +309,9 @@ export default class Spec {
   private extractPrefix = (servers: ServerObject[]): string => {
     const server = servers[0];
     return new URL(server.url).pathname;
+  };
+
+  private includesIgnoreCase = (strings: string[], goal: string): boolean => {
+    return strings.includes(goal.toLowerCase());
   };
 }

@@ -24,6 +24,6 @@ jobs:
         run: npm run build && cd dist && ls -la
       - name: Release
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: cd dist && npx semantic-release

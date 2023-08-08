@@ -177,6 +177,23 @@ describe(' test OneOfSettingTransformer', () => {
               }
             }
           }
+        },
+        '/another/test': {
+          post: {
+            requestBody: {
+              required: true,
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'array',
+                    items: {
+                      $ref: '#/components/schemas/PaymentMethod'
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       },
       ...components
@@ -207,6 +224,36 @@ describe(' test OneOfSettingTransformer', () => {
                         $ref: '#/components/schemas/Credit'
                       }
                     ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        '/another/test': {
+          post: {
+            requestBody: {
+              required: true,
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'array',
+                    items: {
+                      oneOf: [
+                        {
+                          $ref: '#/components/schemas/PayPal'
+                        },
+                        {
+                          $ref: '#/components/schemas/Mastercard'
+                        },
+                        {
+                          $ref: '#/components/schemas/Debit'
+                        },
+                        {
+                          $ref: '#/components/schemas/Credit'
+                        }
+                      ]
+                    }
                   }
                 }
               }
@@ -270,6 +317,23 @@ describe(' test OneOfSettingTransformer', () => {
               }
             }
           }
+        },
+        '/another/test': {
+          post: {
+            requestBody: {
+              required: true,
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'array',
+                    items: {
+                      $ref: '#/components/schemas/Dummy'
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       },
       ...components
@@ -302,6 +366,19 @@ describe(' test OneOfSettingTransformer', () => {
                   'application/json': {
                     schema: {
                       $ref: '#/components/schemas/Mastercard'
+                    }
+                  }
+                }
+              },
+              '404': {
+                description: 'Not Found',
+                content: {
+                  'application/json': {
+                    schema: {
+                      type: 'array',
+                      items: {
+                        $ref: '#/components/schemas/PaymentMethod'
+                      }
                     }
                   }
                 }
@@ -349,6 +426,32 @@ describe(' test OneOfSettingTransformer', () => {
                   'application/json': {
                     schema: {
                       $ref: '#/components/schemas/Mastercard'
+                    }
+                  }
+                }
+              },
+              404: {
+                description: 'Not Found',
+                content: {
+                  'application/json': {
+                    schema: {
+                      type: 'array',
+                      items: {
+                        oneOf: [
+                          {
+                            $ref: '#/components/schemas/PayPal'
+                          },
+                          {
+                            $ref: '#/components/schemas/Mastercard'
+                          },
+                          {
+                            $ref: '#/components/schemas/Debit'
+                          },
+                          {
+                            $ref: '#/components/schemas/Credit'
+                          }
+                        ]
+                      }
                     }
                   }
                 }
@@ -415,6 +518,19 @@ describe(' test OneOfSettingTransformer', () => {
                     }
                   }
                 }
+              },
+              '201': {
+                description: 'Created',
+                content: {
+                  'application/json': {
+                    schema: {
+                      type: 'array',
+                      items: {
+                        $ref: '#/components/schemas/Dummy'
+                      }
+                    }
+                  }
+                }
               }
             }
           }
@@ -458,6 +574,12 @@ describe(' test OneOfSettingTransformer', () => {
               },
               paymentMethod: {
                 $ref: '#/components/schemas/PaymentMethod'
+              },
+              paymentMethods: {
+                type: 'array',
+                items: {
+                  $ref: '#/components/schemas/PaymentMethod'
+                }
               }
             }
           }
@@ -509,6 +631,25 @@ describe(' test OneOfSettingTransformer', () => {
                     '$ref': '#/components/schemas/Credit'
                   }
                 ]
+              },
+              paymentMethods: {
+                type: 'array',
+                items: {
+                  'oneOf': [
+                    {
+                      '$ref': '#/components/schemas/PayPal'
+                    },
+                    {
+                      '$ref': '#/components/schemas/Mastercard'
+                    },
+                    {
+                      '$ref': '#/components/schemas/Debit'
+                    },
+                    {
+                      '$ref': '#/components/schemas/Credit'
+                    }
+                  ]
+                }
               }
             }
           }
@@ -551,6 +692,12 @@ describe(' test OneOfSettingTransformer', () => {
               },
               paymentMethod: {
                 $ref: '#/components/schemas/Dummy'
+              },
+              dummies: {
+                type: 'array',
+                items: {
+                  $ref: '#/components/schemas/Dummy'
+                }
               }
             }
           }
@@ -589,6 +736,12 @@ describe(' test OneOfSettingTransformer', () => {
               },
               paymentMethod: {
                 $ref: '#/components/schemas/Dummy'
+              },
+              dummies: {
+                type: 'array',
+                items: {
+                  $ref: '#/components/schemas/Dummy'
+                }
               }
             }
           }

@@ -169,24 +169,13 @@ export default class Spec {
     const isDirectRef = this.isRef(operationFieldValue);
     const schemaValue = isDirectRef ? operationFieldValue : operationFieldValue.content['application/json'].schema;
 
-    const buildOneOfSchema = (schemaValue: Value): Value => {
-      const name = this.getRefComponentName(schemaValue);
-      const hasChildren = mappings.has(name);
-
-      if (!hasChildren) return schemaValue;
-
-      return {
-        oneOf: this.buildOneOfList(mappings.get(name))
-      }
-    }
-
     let schema;
     if (this.isRef(schemaValue)) {
-      schema = buildOneOfSchema(schemaValue)
+      schema = this.buildOneOfSchema(schemaValue, mappings)
     } else if (this.containsItems(schemaValue)) {
       schema = {
         ...schemaValue,
-        items: buildOneOfSchema(schemaValue.items)
+        items: this.buildOneOfSchema(schemaValue.items, mappings)
       }
     } else return operationFieldValue;
 
@@ -211,24 +200,13 @@ export default class Spec {
 
       const schemaValue = isDirectRef ? responseFields : responseFields.content['application/json'].schema;
 
-      const buildOneOfSchema = (schemaValue: Value): Value => {
-        const name = this.getRefComponentName(schemaValue);
-        const hasChildren = mappings.has(name);
-
-        if (!hasChildren) return schemaValue;
-
-        return {
-          oneOf: this.buildOneOfList(mappings.get(name))
-        }
-      }
-
       let schema;
       if (this.isRef(schemaValue)) {
-        schema = buildOneOfSchema(schemaValue)
+        schema = this.buildOneOfSchema(schemaValue, mappings)
       } else if (this.containsItems(schemaValue)) {
         schema = {
           ...schemaValue,
-          items: buildOneOfSchema(schemaValue.items)
+          items: this.buildOneOfSchema(schemaValue.items, mappings)
         }
       } else return [response, responseFields];
 
@@ -243,6 +221,17 @@ export default class Spec {
         }
       }];
     });
+  }
+
+  private buildOneOfSchema(schemaValue: Value, mappings: Record<Key, Value>): Record<Key, Value> {
+    const name = this.getRefComponentName(schemaValue);
+    const hasChildren = mappings.has(name);
+
+    if (!hasChildren) return schemaValue;
+
+    return {
+      oneOf: this.buildOneOfList(mappings.get(name))
+    }
   }
 
   private buildOneOfProperty(properties: Value, mappings: Record<Key, Value>): Record<Key, Value> {

@@ -144,6 +144,21 @@ describe(' test OneOfSettingTransformer', () => {
             }
           ]
         },
+        SomeCreditCard: {
+          title: 'SomeCreditCard',
+          allOf: [
+            {
+              $ref: '#/components/schemas/CreditCard'
+            },
+            {
+              properties: {
+                name: {
+                  type: 'string'
+                }
+              }
+            }
+          ]
+        },
         Dummy: {
           title: 'Dummy',
           type: 'object',

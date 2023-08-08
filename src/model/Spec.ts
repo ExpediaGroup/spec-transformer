@@ -267,10 +267,33 @@ export default class Spec {
     for (const cmp in allOfComponents) {
       const refs = allOfComponents[cmp].allOf.filter((item: any) => item.$ref).map((item: any) => this.getRefComponentName(item));
       refs.forEach((ref: string) => {
+        if (!this.isDefinedInParent(cmp, ref)) return;
         /* istanbul ignore next */
         children.has(ref) ? children.set(ref, [...(children.get(ref) || []), cmp]) : children.set(ref, [cmp]);
       });
     }
+  }
+
+  private isDefinedInParent = (child: string, parent: string): boolean => {
+    const extractComponentName = (ref: string): string => ref.slice(ref.lastIndexOf('/') + 1)
+
+    const discriminatorMappings: string[] = this.getDiscriminatorMappings(parent);
+    return discriminatorMappings.map((item: string) => extractComponentName(item))
+      .find((value: string): boolean => value === child) != undefined;
+  }
+
+  private getDiscriminatorMappings = (componentName: string): string[] => {
+    const schema = this.specs.components.schemas[componentName];
+    let mappings: string[] = [];
+    if (schema.allOf) {
+      mappings = mappings.concat(schema.allOf.filter((item: Value) => item.discriminator?.mapping)
+        .map((item: Value) => Object.values(item.discriminator.mapping)));
+    }
+    const discriminatorMapping = schema.discriminator?.mapping;
+    if (discriminatorMapping) {
+      mappings = mappings.concat(Object.values(discriminatorMapping));
+    }
+    return mappings;
   }
 
   private getRefComponentName = (item: any) => item.$ref.slice(item.$ref.lastIndexOf('/') + 1);

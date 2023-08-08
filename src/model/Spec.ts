@@ -223,7 +223,7 @@ export default class Spec {
 
   private buildOneOfProperty(properties: Value, mappings: Record<Key, Value>): Record<Key, Value> {
     const updateProperty = (value: Value) => {
-      if (!this.isRef(value)) return value;
+      if (!this.isRef(value)) return this.containsItems(value) ? this.buildOneOfProperty(value, mappings) : value;
 
       const name = this.getRefComponentName(value);
       const hasChildren = mappings.has(name);
@@ -288,6 +288,8 @@ export default class Spec {
   };
 
   private isRef = (value: Value): boolean => value && value.hasOwnProperty('$ref');
+
+  private containsItems = (value: Value): boolean => value && value.hasOwnProperty('items');
 
   private filterHeaderParameters = (parameters: Value, headersToRemove: string[]) => {
     return parameters.filter(

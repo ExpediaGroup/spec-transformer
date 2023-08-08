@@ -169,12 +169,26 @@ export default class Spec {
     const isDirectRef = this.isRef(operationFieldValue);
     const schemaValue = isDirectRef ? operationFieldValue : operationFieldValue.content['application/json'].schema;
 
-    if (!this.isRef(schemaValue)) return operationFieldValue;
+    const buildOneOfSchema = (schemaValue: Value): Value => {
+      const name = this.getRefComponentName(schemaValue);
+      const hasChildren = mappings.has(name);
 
-    const name = this.getRefComponentName(schemaValue);
-    const hasChildren = mappings.has(name);
+      if (!hasChildren) return schemaValue;
 
-    if (!hasChildren) return operationFieldValue;
+      return {
+        oneOf: this.buildOneOfList(mappings.get(name))
+      }
+    }
+
+    let schema;
+    if (this.isRef(schemaValue)) {
+      schema = buildOneOfSchema(schemaValue)
+    } else if (this.containsItems(schemaValue)) {
+      schema = {
+        ...schemaValue,
+        items: buildOneOfSchema(schemaValue.items)
+      }
+    } else return operationFieldValue;
 
     return {
       ...operationFieldValue,
@@ -182,9 +196,7 @@ export default class Spec {
         ...operationFieldValue.content,
         'application/json': {
           ...operationFields.requestBody.content['application/json'],
-          schema: {
-            oneOf: this.buildOneOfList(mappings.get(name))
-          }
+          schema: schema
         }
       }
     };

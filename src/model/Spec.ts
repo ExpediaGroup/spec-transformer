@@ -169,12 +169,15 @@ export default class Spec {
     const isDirectRef = this.isRef(operationFieldValue);
     const schemaValue = isDirectRef ? operationFieldValue : operationFieldValue.content['application/json'].schema;
 
-    if (!this.isRef(schemaValue)) return operationFieldValue;
-
-    const name = this.getRefComponentName(schemaValue);
-    const hasChildren = mappings.has(name);
-
-    if (!hasChildren) return operationFieldValue;
+    let schema;
+    if (this.isRef(schemaValue)) {
+      schema = this.buildOneOfSchema(schemaValue, mappings)
+    } else if (this.containsItems(schemaValue)) {
+      schema = {
+        ...schemaValue,
+        items: this.buildOneOfSchema(schemaValue.items, mappings)
+      }
+    } else return operationFieldValue;
 
     return {
       ...operationFieldValue,
@@ -182,9 +185,7 @@ export default class Spec {
         ...operationFieldValue.content,
         'application/json': {
           ...operationFields.requestBody.content['application/json'],
-          schema: {
-            oneOf: this.buildOneOfList(mappings.get(name))
-          }
+          schema: schema
         }
       }
     };
@@ -199,12 +200,15 @@ export default class Spec {
 
       const schemaValue = isDirectRef ? responseFields : responseFields.content['application/json'].schema;
 
-      if (!this.isRef(schemaValue)) return [response, responseFields];
-
-      const name = this.getRefComponentName(schemaValue);
-      const hasChildren = mappings.has(name);
-
-      if (!hasChildren) return [response, responseFields];
+      let schema;
+      if (this.isRef(schemaValue)) {
+        schema = this.buildOneOfSchema(schemaValue, mappings)
+      } else if (this.containsItems(schemaValue)) {
+        schema = {
+          ...schemaValue,
+          items: this.buildOneOfSchema(schemaValue.items, mappings)
+        }
+      } else return [response, responseFields];
 
       return [response, {
         ...responseFields,
@@ -212,18 +216,27 @@ export default class Spec {
           ...responseFields.content,
           'application/json': {
             ...responseFields.content['application/json'],
-            schema: {
-              oneOf: this.buildOneOfList(mappings.get(name))
-            }
+            schema: schema
           }
         }
       }];
     });
   }
 
+  private buildOneOfSchema(schemaValue: Value, mappings: Record<Key, Value>): Record<Key, Value> {
+    const name = this.getRefComponentName(schemaValue);
+    const hasChildren = mappings.has(name);
+
+    if (!hasChildren) return schemaValue;
+
+    return {
+      oneOf: this.buildOneOfList(mappings.get(name))
+    }
+  }
+
   private buildOneOfProperty(properties: Value, mappings: Record<Key, Value>): Record<Key, Value> {
     const updateProperty = (value: Value) => {
-      if (!this.isRef(value)) return value;
+      if (!this.isRef(value)) return this.containsItems(value) ? this.buildOneOfProperty(value, mappings) : value;
 
       const name = this.getRefComponentName(value);
       const hasChildren = mappings.has(name);
@@ -288,6 +301,8 @@ export default class Spec {
   };
 
   private isRef = (value: Value): boolean => value && value.hasOwnProperty('$ref');
+
+  private containsItems = (value: Value): boolean => value && value.hasOwnProperty('items');
 
   private filterHeaderParameters = (parameters: Value, headersToRemove: string[]) => {
     return parameters.filter(

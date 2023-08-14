@@ -290,7 +290,7 @@ export default class Spec {
       mappings = mappings.concat(Object.values(discriminatorMapping));
     } else if (schema.allOf) {
       mappings = mappings.concat(schema.allOf.filter((item: Value) => item.discriminator?.mapping)
-        .map((item: Value) => Object.values(item.discriminator.mapping)));
+        .map((item: Value) => Object.values(item.discriminator.mapping)).flat());
     }
     return mappings;
   }

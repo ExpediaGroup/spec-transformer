@@ -285,13 +285,12 @@ export default class Spec {
   private getDiscriminatorMappings = (componentName: string): string[] => {
     const schema = this.specs.components.schemas[componentName];
     let mappings: string[] = [];
-    if (schema.allOf) {
-      mappings = mappings.concat(schema.allOf.filter((item: Value) => item.discriminator?.mapping)
-        .map((item: Value) => Object.values(item.discriminator.mapping)));
-    }
     const discriminatorMapping = schema.discriminator?.mapping;
     if (discriminatorMapping) {
       mappings = mappings.concat(Object.values(discriminatorMapping));
+    } else if (schema.allOf) {
+      mappings = mappings.concat(schema.allOf.filter((item: Value) => item.discriminator?.mapping)
+        .map((item: Value) => Object.values(item.discriminator.mapping)));
     }
     return mappings;
   }

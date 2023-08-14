@@ -80,18 +80,18 @@ describe(' test OneOfSettingTransformer', () => {
         },
         Visa: {
           title: 'Visa',
-          discriminator: {
-            propertyName: 'type',
-            mapping: {
-              DEBIT: 'Debit',
-              CREDIT: 'Credit'
-            }
-          },
           allOf: [
             {
               $ref: '#/components/schemas/CreditCard'
             },
             {
+              discriminator: {
+                propertyName: 'type',
+                mapping: {
+                  DEBIT: 'Debit',
+                  CREDIT: 'Credit'
+                }
+              },
               properties: {
                 type: {
                   enum: ['VISA']
@@ -139,6 +139,21 @@ describe(' test OneOfSettingTransformer', () => {
               properties: {
                 type: {
                   enum: ['MASTERCARD']
+                }
+              }
+            }
+          ]
+        },
+        SomeCreditCard: {
+          title: 'SomeCreditCard',
+          allOf: [
+            {
+              $ref: '#/components/schemas/CreditCard'
+            },
+            {
+              properties: {
+                name: {
+                  type: 'string'
                 }
               }
             }

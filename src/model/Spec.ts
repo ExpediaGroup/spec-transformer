@@ -278,8 +278,8 @@ export default class Spec {
     const extractComponentName = (ref: string): string => ref.slice(ref.lastIndexOf('/') + 1)
 
     const discriminatorMappings: string[] = this.getDiscriminatorMappings(parent);
-    return discriminatorMappings.map((item: string) => extractComponentName(item))
-      .find((value: string): boolean => value === child) != undefined;
+    return !!discriminatorMappings.map((item: string) => extractComponentName(item))
+      .find((value: string): boolean => value === child);
   }
 
   private getDiscriminatorMappings = (componentName: string): string[] => {

@@ -55,7 +55,7 @@ export default class Spec {
 
   /**
    * Returns the specs with the given tags.
-   * @param tags: the tags to add to the spec.
+   * @param tags the tags to add to the spec.
    * @returns A copy of the `Spec` object with the given tags.
    */
   withTags(tags: string[]): Spec {
@@ -67,7 +67,7 @@ export default class Spec {
 
   /**
    * Returns the specs with the given operation tags.
-   * @param tags: the tags to add to the operations.
+   * @param tags the tags to add to the operations.
    * @returns A copy of the `Spec` object with the given operation tags.
    */
   withOperationTags(tags: string[]): Spec {
@@ -92,7 +92,7 @@ export default class Spec {
 
   /**
    * Returns the specs with the given headers removed.
-   * @param headersToRemove: the headers to remove.
+   * @param headersToRemove the headers to remove.
    * @returns A copy of the `Spec` object with the given headers removed.
    */
   filterHeaders(headersToRemove: string[]): Spec {
@@ -108,7 +108,7 @@ export default class Spec {
             map(operationFields, (operationField, operationFieldValue) => [
               operationField,
               operationField === PARAMETERS
-                ? this.filterHeaderValues(operationField, operationFieldValue, headersToRemove)
+                ? this.filterHeaderValues(operationFieldValue, headersToRemove)
                 : operationFieldValue
             ])
           ])
@@ -128,7 +128,7 @@ export default class Spec {
       }
 
       if (operationField === RESPONSES) {
-        return this.buildOneOfResponse(operationFields, operationFieldValue, mappings);
+        return this.buildOneOfResponse(operationFieldValue, mappings);
       }
 
       return operationFieldValue;
@@ -191,7 +191,7 @@ export default class Spec {
     };
   }
 
-  private buildOneOfResponse(operationFields: Value, operationFieldValue: Value, mappings: Record<Key, Value>): Record<Key, Value> {
+  private buildOneOfResponse(operationFieldValue: Value, mappings: Record<Key, Value>): Record<Key, Value> {
     return map(operationFieldValue, (response, responseFields) => {
       const isDirectRef = this.isRef(responseFields);
 
@@ -255,7 +255,7 @@ export default class Spec {
 
   private getComponentMappings = (): Record<Key, Value> => {
     const children: Map<string, string[]> = new Map();
-    const allOfComponents: Record<Key, Value> = filter(this.specs.components.schemas, (schema, schemaFields) => schemaFields.allOf);
+    const allOfComponents: Record<Key, Value> = filter(this.specs.components.schemas, (_, schemaFields) => schemaFields.allOf);
 
     this.buildParentChildrenMappings(allOfComponents, children);
     this.mapToLeaves(children);
@@ -321,7 +321,7 @@ export default class Spec {
     if (childReplaced) this.mapToLeaves(children);
   };
 
-  private filterHeaderValues = (key: Key, value: Value, headersToRemove: string[]) => {
+  private filterHeaderValues = (value: Value, headersToRemove: string[]) => {
     return this.isRef(value)
       ? this.filterHeaderComponents(value, headersToRemove)
       : this.filterHeaderParameters(value, headersToRemove);

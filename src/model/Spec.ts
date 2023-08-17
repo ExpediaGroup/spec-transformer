@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-import { Key, Ref, Value } from './Types';
-import { HEADER, PARAMETERS, PROPERTIES, REQUEST_BODY, RESPONSES, TAGS } from '../Constants';
-import { ServerObject, TagObject } from 'openapi3-ts';
-import { filter, map } from '../collection/Functions';
+import {Key, Ref, Value} from './Types';
+import {HEADER, PARAMETERS, PROPERTIES, REQUEST_BODY, RESPONSES, TAGS} from '../Constants';
+import {ServerObject, TagObject} from 'openapi3-ts';
+import {filter, map} from '../collection/Functions';
 
 /**
  * A representation of API Specifications.
@@ -250,7 +250,7 @@ export default class Spec {
 
 
   private buildOneOfList = (children: string[]): Ref[] => {
-    return children.map((child: string) => ({ $ref: '#/components/schemas/' + child }));
+    return children.map((child: string) => ({$ref: '#/components/schemas/' + child}));
   };
 
   private getComponentMappings = (): Record<Key, Value> => {
@@ -344,7 +344,7 @@ export default class Spec {
     return parameter?.in === HEADER && this.includesIgnoreCase(headersToRemove, parameter.name) ? {} : component;
   };
 
-  private mapTags = (tags: string[]): TagObject[] => tags.map((tag) => ({ name: tag }));
+  private mapTags = (tags: string[]): TagObject[] => tags.map((tag) => ({name: tag}));
 
   private prependSlash = (path: string): string => path.startsWith('/') ? path : '/' + path;
 

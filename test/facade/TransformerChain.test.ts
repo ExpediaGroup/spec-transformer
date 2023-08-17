@@ -288,30 +288,4 @@ describe('test TransformerChain', () => {
     expect(transformedSpecs).toContain('"name": "animals"');
     expect(transformedSpecs).toContain('"name": "List all pets"');
   });
-
-  it('should transform xap specs', function () {
-    // const specs = fs.readFileSync('/Users/osamasalman/WebstormProjects/spec-transformer/test-yamls/one-of.yaml', 'utf8');
-    // const specs = fs.readFileSync('/Users/osamasalman/IdeaProjects/openworld-sdk-java/generator/openapi/src/test/resources/fraud-prevention-service-v2-latest.yaml', 'utf8');
-    const specs = fs.readFileSync(
-      '/Users/osamasalman/WebstormProjects/spec-transformer/test-yamls/rapid-3-specs.yaml',
-      'utf8'
-    );
-
-    const transformedSpecs = new TransformerChain([new OneOfSettingTransformer()]).transform(
-      specs,
-      new YamlReader(),
-      new YamlWriter()
-    );
-
-    fs.writeFile(
-      '/Users/osamasalman/WebstormProjects/spec-transformer/test-yamls/one-of-result.yaml',
-      transformedSpecs,
-      function (err) {
-        if (err) {
-          return console.log(err);
-        }
-        // console.log(transformedSpecs);
-      }
-    );
-  });
 });

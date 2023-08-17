@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-import {Key, Ref, Value} from './Types';
-import {HEADER, PARAMETERS, PROPERTIES, REQUEST_BODY, RESPONSES, TAGS} from '../Constants';
-import {ServerObject, TagObject} from 'openapi3-ts';
-import {filter, map} from '../collection/Functions';
+import { Key, Ref, Value } from './Types';
+import { HEADER, PARAMETERS, PROPERTIES, REQUEST_BODY, RESPONSES, TAGS } from '../Constants';
+import { ServerObject, TagObject } from 'openapi3-ts';
+import { filter, map } from '../collection/Functions';
 
 /**
  * A representation of API Specifications.

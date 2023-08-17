@@ -245,11 +245,7 @@ export default class Spec {
 
       const name = this.getRefComponentName(value);
       const hasChildren = mappings.has(name);
-      return hasChildren
-        ? {
-            oneOf: this.buildOneOfList(mappings.get(name))
-          }
-        : value;
+      return hasChildren ? { oneOf: this.buildOneOfList(mappings.get(name)) } : value;
     };
 
     return map(properties, (key: Key, value: Value) => [key, updateProperty(value)]);

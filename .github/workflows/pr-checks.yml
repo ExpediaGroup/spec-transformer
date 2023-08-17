@@ -16,9 +16,9 @@ name: PR Checks
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ['main']
   pull_request:
-    branches: [ "main" ]
+    branches: ['main']
 
 jobs:
   build:
@@ -35,4 +35,3 @@ jobs:
         run: npm run build
       - name: Test
         run: npm test --coverage
-

@@ -49,17 +49,30 @@ const optionNames = {
 
 function buildCommand(): Command {
   const program = new Command();
-  program.version('1.0.0')
+  program
+    .version('1.0.0')
     .description(`${appName} CLI`)
     .option(`-i, --${optionNames.input} [value]`, 'Input file path')
-    .option(`-if, --${optionNames.inputFormat} [value]`, 'Input file format. Supported formats: json, yaml. Default: yaml')
+    .option(
+      `-if, --${optionNames.inputFormat} [value]`,
+      'Input file format. Supported formats: json, yaml. Default: yaml'
+    )
     .option(`-o, --${optionNames.output} [value]`, 'Output file path')
-    .option(`-of, --${optionNames.outputFormat} [value]`, 'Output file format. Supported formats: json, yaml. Default: yaml unless Postman transformation is applied, then json')
+    .option(
+      `-of, --${optionNames.outputFormat} [value]`,
+      'Output file format. Supported formats: json, yaml. Default: yaml unless Postman transformation is applied, then json'
+    )
     .option(`-tt, --${optionNames.tags} [value]`, 'Update the specs tags')
-    .option(`-th, --${optionNames.headers} [value]`, 'Remove the specified headers from the specs, or the common ones if none are specified')
+    .option(
+      `-th, --${optionNames.headers} [value]`,
+      'Remove the specified headers from the specs, or the common ones if none are specified'
+    )
     .option(`-to, --${optionNames.oneOf}`, 'Add the oneOf property to the specs where needed')
     .option(`-tp, --${optionNames.postman}`, 'Transform the specs to Postman collection format')
-    .option(`-te, --${optionNames.endpoint} [value]`, 'Prepend endpoints with the specified product key, or the pathname from the first server url if none is specified.')
+    .option(
+      `-te, --${optionNames.endpoint} [value]`,
+      'Prepend endpoints with the specified product key, or the pathname from the first server url if none is specified.'
+    )
     .parse(process.argv);
 
   return program;
@@ -118,9 +131,10 @@ class TransformerExecutor {
 
     this.reader = inputFormat?.toLowerCase() === 'json' ? new JsonReader() : new YamlReader();
 
-
     if (isTransformerUsed(command, optionNames.postman) && outputFormat?.toLowerCase() !== 'json') {
-      console.warn(`>> ${appName}: Postman collection import is only supported from JSON files. Defaulting to JSON Writer`);
+      console.warn(
+        `>> ${appName}: Postman collection import is only supported from JSON files. Defaulting to JSON Writer`
+      );
       this.writer = new JsonWriter();
     } else {
       this.writer = outputFormat?.toLowerCase() === 'json' ? new JsonWriter() : new YamlWriter();
@@ -149,11 +163,18 @@ class TransformerExecutor {
     }
 
     if (isTransformerUsed(this.command, optionNames.postman) && !(this.writer instanceof JsonWriter)) {
-      console.warn(`>> ${appName}: Are you sure you want to write the Postman collection in YAML format? Postman collection import is only supported from JSON files.`);
+      console.warn(
+        `>> ${appName}: Are you sure you want to write the Postman collection in YAML format? Postman collection import is only supported from JSON files.`
+      );
     }
 
-    if (isTransformerUsed(this.command, optionNames.endpoint) && typeof this.command.getOptionValue(optionNames.endpoint) !== 'string') {
-      console.warn(`>> ${appName}: No product key is specified to '--${optionNames.endpoint}' transformer, defaulting to the pathname from the first server url!`);
+    if (
+      isTransformerUsed(this.command, optionNames.endpoint) &&
+      typeof this.command.getOptionValue(optionNames.endpoint) !== 'string'
+    ) {
+      console.warn(
+        `>> ${appName}: No product key is specified to '--${optionNames.endpoint}' transformer, defaulting to the pathname from the first server url!`
+      );
     }
 
     const input = fs.readFileSync(this.inputPath!!, 'utf8');
@@ -170,7 +191,9 @@ function isTransformerUsed(command: Command, transformerName: string): boolean {
 }
 
 function exitWithMessage(message: string, missingOption: string | null = null): void {
-  const messageWithOption = missingOption ? `${message}! You may want to specify the '--${missingOption}' option value.` : message;
+  const messageWithOption = missingOption
+    ? `${message}! You may want to specify the '--${missingOption}' option value.`
+    : message;
   console.error(`>> ${appName}: ${messageWithOption}`);
   process.exit(1);
 }

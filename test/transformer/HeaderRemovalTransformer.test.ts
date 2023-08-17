@@ -21,64 +21,64 @@ describe('test HeaderRemovalTransformer', () => {
     in: 'header',
     name: 'accept',
     schema: {
-      type: 'string',
-    },
+      type: 'string'
+    }
   };
   const acceptEncodingHeader = {
     in: 'header',
     name: 'accept-encoding',
     schema: {
-      type: 'string',
-    },
+      type: 'string'
+    }
   };
   const acceptEncodingCapitalizedHeader = {
     in: 'header',
     name: 'Accept-Encoding',
     schema: {
-      type: 'string',
-    },
+      type: 'string'
+    }
   };
   const authorizationHeader = {
     in: 'header',
     name: 'authorization',
     schema: {
-      type: 'string',
-    },
+      type: 'string'
+    }
   };
   const contentTypeHeader = {
     in: 'header',
     name: 'content-type',
     schema: {
-      type: 'string',
-    },
+      type: 'string'
+    }
   };
   const userAgentHeader = {
     in: 'header',
     name: 'user-agent',
     schema: {
-      type: 'string',
-    },
+      type: 'string'
+    }
   };
   const xCustomHeader = {
     in: 'header',
     name: 'x-custom-header',
     schema: {
-      type: 'string',
-    },
+      type: 'string'
+    }
   };
   const acceptQueryParameter = {
     in: 'query',
     name: 'accept',
     schema: {
-      type: 'string',
-    },
+      type: 'string'
+    }
   };
 
   const specs = {
     openapi: '3.0.0',
     info: {
       title: 'Example API',
-      version: '1.0.0',
+      version: '1.0.0'
     },
     paths: {
       '/hello': {
@@ -93,7 +93,7 @@ describe('test HeaderRemovalTransformer', () => {
             contentTypeHeader,
             userAgentHeader,
             xCustomHeader,
-            acceptQueryParameter,
+            acceptQueryParameter
           ],
           responses: {
             '200': {
@@ -101,45 +101,45 @@ describe('test HeaderRemovalTransformer', () => {
               content: {
                 'text/plain': {
                   schema: {
-                    type: 'string',
-                  },
-                },
-              },
-            },
-          },
+                    type: 'string'
+                  }
+                }
+              }
+            }
+          }
         },
         post: {
           tags: ['inPath-Post'],
           summary: 'Say hello from path /hello - POST',
           parameters: {
-            $ref: '#/components/parameters/AcceptHeaderParameter',
-          },
+            $ref: '#/components/parameters/AcceptHeaderParameter'
+          }
         },
         put: {
           tags: ['inPath-Put'],
           summary: 'Say hello from path /hello - PUT',
           parameters: {
-            $ref: '#/components/parameters/XCustomHeaderParameter',
-          },
-        },
-      },
+            $ref: '#/components/parameters/XCustomHeaderParameter'
+          }
+        }
+      }
     },
     components: {
       parameters: {
         AcceptHeaderParameter: acceptHeader,
-        XCustomHeaderParameter: xCustomHeader,
+        XCustomHeaderParameter: xCustomHeader
       },
       schemas: {
         MySchema: {
           type: 'object',
           properties: {
             property1: {
-              type: 'string',
-            },
-          },
-        },
-      },
-    },
+              type: 'string'
+            }
+          }
+        }
+      }
+    }
   };
 
   it('should remove unwanted headers', () => {
@@ -152,7 +152,7 @@ describe('test HeaderRemovalTransformer', () => {
       authorizationHeader,
       userAgentHeader,
       xCustomHeader,
-      acceptQueryParameter,
+      acceptQueryParameter
     ]);
   });
 
@@ -171,7 +171,7 @@ describe('test HeaderRemovalTransformer', () => {
       contentTypeHeader,
       userAgentHeader,
       xCustomHeader,
-      acceptQueryParameter,
+      acceptQueryParameter
     ]);
   });
 
@@ -180,7 +180,7 @@ describe('test HeaderRemovalTransformer', () => {
 
     expect(transformer.transform(specs).paths['/hello'].post.parameters).toEqual({});
     expect(transformer.transform(specs).paths['/hello'].put.parameters).toEqual({
-      $ref: '#/components/parameters/XCustomHeaderParameter',
+      $ref: '#/components/parameters/XCustomHeaderParameter'
     });
   });
 });

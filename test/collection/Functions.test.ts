@@ -40,7 +40,7 @@ describe('test Functions', () => {
   });
 
   describe('test filter', () => {
-    it('should filter a record', function() {
+    it('should filter a record', function () {
       const record = {
         a: 'a',
         b: 'b',

@@ -18,7 +18,6 @@ import Transformer from './Transformer';
 import { Key, Value } from '../model/Types';
 import Spec from '../model/Spec';
 
-
 export class EndpointTransformer implements Transformer {
   productKey?: string;
 
@@ -27,8 +26,6 @@ export class EndpointTransformer implements Transformer {
   }
 
   transform(specs: Record<Key, Value>): Record<Key, Value> {
-    return new Spec(specs)
-      .withUpdatedEndpoints(this.productKey)
-      .records();
+    return new Spec(specs).withUpdatedEndpoints(this.productKey).records();
   }
 }

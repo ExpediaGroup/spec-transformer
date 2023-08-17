@@ -37,9 +37,6 @@ export function map(
  * @param predicate The predicate to use.
  * @returns A new record with the filtered values.
  */
-export function filter(
-  record: Record<Key, Value>,
-  predicate: (k: Key, v: Value) => boolean
-): Record<Key, Value> {
+export function filter(record: Record<Key, Value>, predicate: (k: Key, v: Value) => boolean): Record<Key, Value> {
   return Object.fromEntries(Object.entries(record).filter(([k, v]) => predicate(k, v)));
 }

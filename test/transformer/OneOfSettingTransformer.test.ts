@@ -61,7 +61,8 @@ describe(' test OneOfSettingTransformer', () => {
                   enum: ['CREDIT_CARD']
                 }
               }
-            }]
+            }
+          ]
         },
         PayPal: {
           title: 'PayPal',
@@ -112,7 +113,8 @@ describe(' test OneOfSettingTransformer', () => {
                   enum: ['DEBIT']
                 }
               }
-            }]
+            }
+          ]
         },
         Credit: {
           title: 'Credit',
@@ -172,7 +174,6 @@ describe(' test OneOfSettingTransformer', () => {
       }
     }
   };
-
 
   it('should add oneOf to requestBody', () => {
     const specs = {
@@ -478,7 +479,6 @@ describe(' test OneOfSettingTransformer', () => {
       ...components
     };
 
-
     expect(new OneOfSettingTransformer().transform(specs)).toEqual(transformedSpecs);
   });
 
@@ -632,36 +632,36 @@ describe(' test OneOfSettingTransformer', () => {
                 type: 'string'
               },
               paymentMethod: {
-                'oneOf': [
+                oneOf: [
                   {
-                    '$ref': '#/components/schemas/PayPal'
+                    $ref: '#/components/schemas/PayPal'
                   },
                   {
-                    '$ref': '#/components/schemas/Mastercard'
+                    $ref: '#/components/schemas/Mastercard'
                   },
                   {
-                    '$ref': '#/components/schemas/Debit'
+                    $ref: '#/components/schemas/Debit'
                   },
                   {
-                    '$ref': '#/components/schemas/Credit'
+                    $ref: '#/components/schemas/Credit'
                   }
                 ]
               },
               paymentMethods: {
                 type: 'array',
                 items: {
-                  'oneOf': [
+                  oneOf: [
                     {
-                      '$ref': '#/components/schemas/PayPal'
+                      $ref: '#/components/schemas/PayPal'
                     },
                     {
-                      '$ref': '#/components/schemas/Mastercard'
+                      $ref: '#/components/schemas/Mastercard'
                     },
                     {
-                      '$ref': '#/components/schemas/Debit'
+                      $ref: '#/components/schemas/Debit'
                     },
                     {
-                      '$ref': '#/components/schemas/Credit'
+                      $ref: '#/components/schemas/Credit'
                     }
                   ]
                 }

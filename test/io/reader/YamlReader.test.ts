@@ -28,7 +28,7 @@ describe('test YamlReader', () => {
       '    get:\n' +
       '      summary: List all pets\n' +
       '      responses:\n' +
-      '        \'200\':\n' +
+      "        '200':\n" +
       '          content:\n' +
       '            application/json:    \n' +
       '              schema:\n' +

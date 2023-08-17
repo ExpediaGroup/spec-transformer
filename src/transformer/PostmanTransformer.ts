@@ -25,7 +25,6 @@ import { Input, Options } from 'openapi-to-postmanv2';
  */
 export class PostmanTransformer implements Transformer {
   transform(specs: Record<Key, Value>): Record<Key, Value> {
-
     // @ts-ignore
     const input: Input = { type: 'json', data: specs };
 
@@ -36,13 +35,12 @@ export class PostmanTransformer implements Transformer {
 
     let result: Record<Key, Value> = {};
     converter.convert(input, options, (err: unknown, conversionResult: Record<Key, Value>) => {
-        if (err || !conversionResult.result) {
-          console.warn('Error transforming to Postman collection', { error: err, reason: conversionResult.reason });
-          return;
-        }
-        result = conversionResult.output[0].data;
+      if (err || !conversionResult.result) {
+        console.warn('Error transforming to Postman collection', { error: err, reason: conversionResult.reason });
+        return;
       }
-    );
+      result = conversionResult.output[0].data;
+    });
 
     return result;
   }

@@ -1,7 +1,5 @@
 {
-  "branches": [
-    "main"
-  ],
+  "branches": ["main"],
   "plugins": [
     [
       "@semantic-release/commit-analyzer",
@@ -27,12 +25,7 @@
           }
         ],
         "parserOpts": {
-          "noteKeywords": [
-            "BREAKING CHANGE",
-            "BREAKING CHANGES",
-            "BREAKING-CHANGE",
-            "BREAKING"
-          ]
+          "noteKeywords": ["BREAKING CHANGE", "BREAKING CHANGES", "BREAKING-CHANGE", "BREAKING"]
         }
       }
     ],
@@ -41,17 +34,10 @@
       {
         "preset": "conventionalcommits",
         "parserOpts": {
-          "noteKeywords": [
-            "BREAKING CHANGE",
-            "BREAKING CHANGES",
-            "BREAKING"
-          ]
+          "noteKeywords": ["BREAKING CHANGE", "BREAKING CHANGES", "BREAKING"]
         },
         "writerOpts": {
-          "commitsSort": [
-            "subject",
-            "scope"
-          ]
+          "commitsSort": ["subject", "scope"]
         }
       }
     ],
@@ -61,22 +47,12 @@
         "changelogFile": "CHANGELOG.md"
       }
     ],
-    [
-      "@semantic-release/npm"
-    ],
+    ["@semantic-release/npm"],
     [
       "@semantic-release/git",
       {
         "message": "${nextRelease.version} CHANGELOG [skip ci]\n\n${nextRelease.notes}",
-        "assets": [
-          "package.json",
-          "CHANGELOG.md",
-          "LICENSE",
-          "README.md",
-          "CONTRIBUTING.md",
-          "dist/**/*",
-          "src/**/*"
-        ]
+        "assets": ["package.json", "CHANGELOG.md", "LICENSE", "README.md", "CONTRIBUTING.md", "dist/**/*", "src/**/*"]
       }
     ],
     "@semantic-release/github"

@@ -1,23 +1,23 @@
 version: 2
 updates:
-  - package-ecosystem: "github-actions"
-    directory: "/"
+  - package-ecosystem: 'github-actions'
+    directory: '/'
     schedule:
-      interval: "daily"
-      time: "11:30"
-      timezone: "UTC"
+      interval: 'daily'
+      time: '11:30'
+      timezone: 'UTC'
     target-branch: main
     reviewers:
       - ExpediaGroup/openworld-committers
     labels:
       - Dependabot
-      
-  - package-ecosystem: "npm"
-    directory: "/"
+
+  - package-ecosystem: 'npm'
+    directory: '/'
     schedule:
       interval: daily
-      time: "11:30"
-      timezone: "UTC"
+      time: '11:30'
+      timezone: 'UTC'
     open-pull-requests-limit: 10
     target-branch: main
     reviewers:

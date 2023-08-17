@@ -78,7 +78,7 @@ describe('test EndpointTransformer', () => {
           url: 'https://api.example.com/productX'
         }
       ]
-    }
+    };
 
     expect(new EndpointTransformer().transform(specsWithServerUrl)).toEqual(expectedSpecsWithServerUrl);
   });

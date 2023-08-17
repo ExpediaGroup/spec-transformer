@@ -22,4 +22,4 @@ export type Value = any;
 
 export type Ref = {
   $ref: string;
-}
+};

@@ -29,10 +29,12 @@ describe('test PostmanTransformer', () => {
           email: 'support@example.com'
         }
       },
-      tags: [{
-        name: 'tag1',
-        description: 'Tag 1'
-      }],
+      tags: [
+        {
+          name: 'tag1',
+          description: 'Tag 1'
+        }
+      ],
       paths: {
         '/hello': {
           get: {
@@ -65,7 +67,9 @@ describe('test PostmanTransformer', () => {
     expect(postmanCollection.info.description.content).toContain(specs.info.contact.name);
     expect(postmanCollection.info.description.content).toContain(specs.info.contact.email);
     expect(postmanCollection.item[0].item[0].request.name).toEqual(specs.paths['/hello'].get.summary);
-    expect(postmanCollection.item[0].item[0].request.description.content).toEqual(specs.paths['/hello'].get.description);
+    expect(postmanCollection.item[0].item[0].request.description.content).toEqual(
+      specs.paths['/hello'].get.description
+    );
   });
 
   it('should return an empty record for empty input', () => {

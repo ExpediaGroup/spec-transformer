@@ -13,11 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import * as fs from 'fs';
 
 import {
   COMMON_UNWANTED_HEADERS,
   HeaderRemovalTransformer,
   JsonWriter,
+  OneOfSettingTransformer,
   PostmanTransformer,
   TagsSettingTransformer,
   TransformerChain,
@@ -42,7 +44,7 @@ describe('test TransformerChain', () => {
     '      tags:\n' +
     '        - pets\n' +
     '      responses:\n' +
-    '        \'200\':\n' +
+    "        '200':\n" +
     '          content:\n' +
     '            application/json:    \n' +
     '              schema:\n' +
@@ -165,52 +167,50 @@ describe('test TransformerChain', () => {
 
   it('should transform a record with multiple transformers', () => {
     const specs = {
-      'openapi': '3.0.0',
-      'info': {
-        'title': 'Pet Store API',
-        'version': '1.0.0'
+      openapi: '3.0.0',
+      info: {
+        title: 'Pet Store API',
+        version: '1.0.0'
       },
-      'tags': [
+      tags: [
         {
-          'name': 'pets',
-          'description': 'Operations related to pets'
+          name: 'pets',
+          description: 'Operations related to pets'
         }
       ],
-      'paths': {
+      paths: {
         '/pets': {
-          'get': {
-            'summary': 'List all pets',
-            'tags': [
-              'pets'
-            ],
-            'parameters': [
+          get: {
+            summary: 'List all pets',
+            tags: ['pets'],
+            parameters: [
               {
-                'name': 'accept',
-                'in': 'header'
+                name: 'accept',
+                in: 'header'
               },
               {
-                'name': 'X-Request-ID',
-                'in': 'header'
+                name: 'X-Request-ID',
+                in: 'header'
               },
               {
-                'name': 'content-type',
-                'in': 'header'
+                name: 'content-type',
+                in: 'header'
               }
             ],
-            'responses': {
+            responses: {
               '200': {
-                'content': {
+                content: {
                   'application/json': {
-                    'schema': {
-                      'type': 'array',
-                      'items': {
-                        'type': 'object',
-                        'properties': {
-                          'id': {
-                            'type': 'string'
+                    schema: {
+                      type: 'array',
+                      items: {
+                        type: 'object',
+                        properties: {
+                          id: {
+                            type: 'string'
                           },
-                          'name': {
-                            'type': 'string'
+                          name: {
+                            type: 'string'
                           }
                         }
                       }
@@ -225,41 +225,37 @@ describe('test TransformerChain', () => {
     };
 
     const transformedSpecs = {
-      'openapi': '3.0.0',
-      'info': {
-        'title': 'Pet Store API',
-        'version': '1.0.0'
+      openapi: '3.0.0',
+      info: {
+        title: 'Pet Store API',
+        version: '1.0.0'
       },
-      'tags': [
-        { name: 'animals' }
-      ],
-      'paths': {
+      tags: [{ name: 'animals' }],
+      paths: {
         '/pets': {
-          'get': {
-            'summary': 'List all pets',
-            'tags': [
-              'animals'
-            ],
-            'parameters': [
+          get: {
+            summary: 'List all pets',
+            tags: ['animals'],
+            parameters: [
               {
-                'name': 'X-Request-ID',
-                'in': 'header'
+                name: 'X-Request-ID',
+                in: 'header'
               }
             ],
-            'responses': {
+            responses: {
               '200': {
-                'content': {
+                content: {
                   'application/json': {
-                    'schema': {
-                      'type': 'array',
-                      'items': {
-                        'type': 'object',
-                        'properties': {
-                          'id': {
-                            'type': 'string'
+                    schema: {
+                      type: 'array',
+                      items: {
+                        type: 'object',
+                        properties: {
+                          id: {
+                            type: 'string'
                           },
-                          'name': {
-                            'type': 'string'
+                          name: {
+                            type: 'string'
                           }
                         }
                       }
@@ -282,7 +278,6 @@ describe('test TransformerChain', () => {
   });
 
   it('should transform a yaml specs to Postman Collection (in json)', () => {
-
     const transformedSpecs = new TransformerChain([
       new TagsSettingTransformer('animals'),
       new PostmanTransformer()
@@ -292,5 +287,31 @@ describe('test TransformerChain', () => {
     expect(transformedSpecs).toContain('"content": "Pet Store API"');
     expect(transformedSpecs).toContain('"name": "animals"');
     expect(transformedSpecs).toContain('"name": "List all pets"');
+  });
+
+  it('should transform xap specs', function () {
+    // const specs = fs.readFileSync('/Users/osamasalman/WebstormProjects/spec-transformer/test-yamls/one-of.yaml', 'utf8');
+    // const specs = fs.readFileSync('/Users/osamasalman/IdeaProjects/openworld-sdk-java/generator/openapi/src/test/resources/fraud-prevention-service-v2-latest.yaml', 'utf8');
+    const specs = fs.readFileSync(
+      '/Users/osamasalman/WebstormProjects/spec-transformer/test-yamls/rapid-3-specs.yaml',
+      'utf8'
+    );
+
+    const transformedSpecs = new TransformerChain([new OneOfSettingTransformer()]).transform(
+      specs,
+      new YamlReader(),
+      new YamlWriter()
+    );
+
+    fs.writeFile(
+      '/Users/osamasalman/WebstormProjects/spec-transformer/test-yamls/one-of-result.yaml',
+      transformedSpecs,
+      function (err) {
+        if (err) {
+          return console.log(err);
+        }
+        // console.log(transformedSpecs);
+      }
+    );
   });
 });

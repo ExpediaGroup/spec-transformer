@@ -142,10 +142,7 @@ export default class Spec {
           map(operations, (operation, operationFields) => [
             operation,
             map(operationFields, (operationField, operationFieldValue) => {
-              return [
-                operationField,
-                setOperationFieldValue(operationFields, operationField, operationFieldValue)
-              ];
+              return [operationField, setOperationFieldValue(operationFields, operationField, operationFieldValue)];
             })
           ])
         ])
@@ -165,18 +162,22 @@ export default class Spec {
     });
   };
 
-  private buildOneOfRequest(operationFields: Value, operationFieldValue: Value, mappings: Record<Key, Value>): Record<Key, Value> {
+  private buildOneOfRequest(
+    operationFields: Value,
+    operationFieldValue: Value,
+    mappings: Record<Key, Value>
+  ): Record<Key, Value> {
     const isDirectRef = this.isRef(operationFieldValue);
     const schemaValue = isDirectRef ? operationFieldValue : operationFieldValue.content['application/json'].schema;
 
     let schema;
     if (this.isRef(schemaValue)) {
-      schema = this.buildOneOfSchema(schemaValue, mappings)
+      schema = this.buildOneOfSchema(schemaValue, mappings);
     } else if (this.containsItems(schemaValue)) {
       schema = {
         ...schemaValue,
         items: this.buildOneOfSchema(schemaValue.items, mappings)
-      }
+      };
     } else return operationFieldValue;
 
     return {
@@ -196,30 +197,34 @@ export default class Spec {
       const isDirectRef = this.isRef(responseFields);
 
       /* istanbul ignore next */
-      if (!isDirectRef && (!responseFields?.content || !responseFields.content['application/json'])) return [response, responseFields];
+      if (!isDirectRef && (!responseFields?.content || !responseFields.content['application/json']))
+        return [response, responseFields];
 
       const schemaValue = isDirectRef ? responseFields : responseFields.content['application/json'].schema;
 
       let schema;
       if (this.isRef(schemaValue)) {
-        schema = this.buildOneOfSchema(schemaValue, mappings)
+        schema = this.buildOneOfSchema(schemaValue, mappings);
       } else if (this.containsItems(schemaValue)) {
         schema = {
           ...schemaValue,
           items: this.buildOneOfSchema(schemaValue.items, mappings)
-        }
+        };
       } else return [response, responseFields];
 
-      return [response, {
-        ...responseFields,
-        content: {
-          ...responseFields.content,
-          'application/json': {
-            ...responseFields.content['application/json'],
-            schema: schema
+      return [
+        response,
+        {
+          ...responseFields,
+          content: {
+            ...responseFields.content,
+            'application/json': {
+              ...responseFields.content['application/json'],
+              schema: schema
+            }
           }
         }
-      }];
+      ];
     });
   }
 
@@ -231,7 +236,7 @@ export default class Spec {
 
     return {
       oneOf: this.buildOneOfList(mappings.get(name))
-    }
+    };
   }
 
   private buildOneOfProperty(properties: Value, mappings: Record<Key, Value>): Record<Key, Value> {
@@ -240,22 +245,26 @@ export default class Spec {
 
       const name = this.getRefComponentName(value);
       const hasChildren = mappings.has(name);
-      return hasChildren ? {
-        oneOf: this.buildOneOfList(mappings.get(name))
-      } : value;
+      return hasChildren
+        ? {
+            oneOf: this.buildOneOfList(mappings.get(name))
+          }
+        : value;
     };
 
     return map(properties, (key: Key, value: Value) => [key, updateProperty(value)]);
   }
 
-
   private buildOneOfList = (children: string[]): Ref[] => {
-    return children.map((child: string) => ({$ref: '#/components/schemas/' + child}));
+    return children.map((child: string) => ({ $ref: '#/components/schemas/' + child }));
   };
 
   private getComponentMappings = (): Record<Key, Value> => {
     const children: Map<string, string[]> = new Map();
-    const allOfComponents: Record<Key, Value> = filter(this.specs.components.schemas, (_, schemaFields) => schemaFields.allOf);
+    const allOfComponents: Record<Key, Value> = filter(
+      this.specs.components.schemas,
+      (_, schemaFields) => schemaFields.allOf
+    );
 
     this.buildParentChildrenMappings(allOfComponents, children);
     this.mapToLeaves(children);
@@ -265,7 +274,9 @@ export default class Spec {
 
   private buildParentChildrenMappings(allOfComponents: Record<Key, Value>, children: Map<string, string[]>) {
     for (const cmp in allOfComponents) {
-      const refs = allOfComponents[cmp].allOf.filter((item: any) => item.$ref).map((item: any) => this.getRefComponentName(item));
+      const refs = allOfComponents[cmp].allOf
+        .filter((item: any) => item.$ref)
+        .map((item: any) => this.getRefComponentName(item));
       refs.forEach((ref: string) => {
         if (!this.isDefinedInParent(cmp, ref)) return;
         /* istanbul ignore next */
@@ -275,12 +286,13 @@ export default class Spec {
   }
 
   private isDefinedInParent = (child: string, parent: string): boolean => {
-    const extractComponentName = (ref: string): string => ref.slice(ref.lastIndexOf('/') + 1)
+    const extractComponentName = (ref: string): string => ref.slice(ref.lastIndexOf('/') + 1);
 
     const discriminatorMappings: string[] = this.getDiscriminatorMappings(parent);
-    return !!discriminatorMappings.map((item: string) => extractComponentName(item))
+    return !!discriminatorMappings
+      .map((item: string) => extractComponentName(item))
       .find((value: string): boolean => value === child);
-  }
+  };
 
   private getDiscriminatorMappings = (componentName: string): string[] => {
     const schema = this.specs.components.schemas[componentName];
@@ -290,15 +302,14 @@ export default class Spec {
       mappings = mappings.concat(Object.values(discriminatorMapping));
     } else if (schema.allOf) {
       mappings = mappings.concat(
-        schema.allOf.filter(
-          (item: Value) => item.discriminator?.mapping
-        ).map(
-          (item: Value) => Object.values(item.discriminator.mapping)
-        ).flat()
+        schema.allOf
+          .filter((item: Value) => item.discriminator?.mapping)
+          .map((item: Value) => Object.values(item.discriminator.mapping))
+          .flat()
       );
     }
     return mappings;
-  }
+  };
 
   private getRefComponentName = (item: any) => item.$ref.slice(item.$ref.lastIndexOf('/') + 1);
 
@@ -307,13 +318,13 @@ export default class Spec {
 
     children.forEach((members, parent) => {
       /* istanbul ignore next */
-      members.forEach(member => {
+      members.forEach((member) => {
         if (!children.has(member) || (children.get(member) || [])?.length === 0) {
           return;
         }
 
         children.set(parent, children.get(parent)?.filter((item) => item !== member) || []);
-        children.get(parent)?.push(...children.get(member) || []);
+        children.get(parent)?.push(...(children.get(member) || []));
         childReplaced = true;
       });
     });
@@ -333,7 +344,8 @@ export default class Spec {
 
   private filterHeaderParameters = (parameters: Value, headersToRemove: string[]) => {
     return parameters.filter(
-      (parameter: Record<Key, Value>) => parameter.in !== HEADER || !this.includesIgnoreCase(headersToRemove, parameter.name)
+      (parameter: Record<Key, Value>) =>
+        parameter.in !== HEADER || !this.includesIgnoreCase(headersToRemove, parameter.name)
     );
   };
 
@@ -344,9 +356,9 @@ export default class Spec {
     return parameter?.in === HEADER && this.includesIgnoreCase(headersToRemove, parameter.name) ? {} : component;
   };
 
-  private mapTags = (tags: string[]): TagObject[] => tags.map((tag) => ({name: tag}));
+  private mapTags = (tags: string[]): TagObject[] => tags.map((tag) => ({ name: tag }));
 
-  private prependSlash = (path: string): string => path.startsWith('/') ? path : '/' + path;
+  private prependSlash = (path: string): string => (path.startsWith('/') ? path : '/' + path);
 
   private extractPrefix = (servers: ServerObject[]): string => {
     const server = servers[0];

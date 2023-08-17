@@ -55,7 +55,6 @@ describe('test JsonReader', () => {
       '\n  }' +
       '\n}';
 
-
     expect(new JsonReader().read(jsonSpecs)).toEqual({
       openapi: '3.0.0',
       info: {

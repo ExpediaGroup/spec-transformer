@@ -22,7 +22,7 @@ describe('test YamlWriter', () => {
       openapi: '3.0.0',
       info: {
         title: 'Pet Store API',
-        version: '1.0.0',
+        version: '1.0.0'
       },
       paths: {
         '/pets': {
@@ -38,21 +38,21 @@ describe('test YamlWriter', () => {
                         type: 'object',
                         properties: {
                           id: {
-                            type: 'string',
+                            type: 'string'
                           },
                           name: {
-                            type: 'string',
-                          },
-                        },
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
+                            type: 'string'
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     };
 
     const specsYaml =

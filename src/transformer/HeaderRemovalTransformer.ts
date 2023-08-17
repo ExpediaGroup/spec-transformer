@@ -23,7 +23,7 @@ export const COMMON_UNWANTED_HEADERS: string[] = [
   'accept-encoding',
   'user-agent',
   'authorization',
-  'content-type',
+  'content-type'
 ];
 
 /**

@@ -59,3 +59,4 @@ npm test
 ## Development Team
 
 - [Mohammad Noor Abu Khleif](https://github.com/mohnoor94)
+- [Osama Salman](https://github.com/osama-salman99)

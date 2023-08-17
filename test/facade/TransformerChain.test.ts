@@ -13,13 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import * as fs from 'fs';
 
 import {
   COMMON_UNWANTED_HEADERS,
   HeaderRemovalTransformer,
   JsonWriter,
-  OneOfSettingTransformer,
   PostmanTransformer,
   TagsSettingTransformer,
   TransformerChain,

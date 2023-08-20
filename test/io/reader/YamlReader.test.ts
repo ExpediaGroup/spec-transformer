@@ -110,6 +110,37 @@ describe('test YamlReader', () => {
     });
   });
 
+  it('should return the parsed specs when they contain wrongly-indented, multiline strings with backslashes', () => {
+    const yamlSpecs =
+      'openapi: 3.0.0\n' +
+      'info:\n' +
+      '  title: Pet Store API\n' +
+      '  version: 1.0.0\n' +
+      'paths:\n' +
+      '  /pets:\n' +
+      '    get:\n' +
+      '      summary: List all pets\n' +
+      '      description: "this is a wrongly\\\n' +
+      '      \\ indented multiline string that\\\n' +
+      '      \\ should be parsed correctly"';
+
+    expect(new YamlReader().read(yamlSpecs)).toEqual({
+      openapi: '3.0.0',
+      info: {
+        title: 'Pet Store API',
+        version: '1.0.0'
+      },
+      paths: {
+        '/pets': {
+          get: {
+            summary: 'List all pets',
+            description: 'this is a wrongly indented multiline string that should be parsed correctly'
+          }
+        }
+      }
+    });
+  });
+
   it('should return an empty record when input is empty', () => {
     expect(new YamlReader().read('')).toEqual({});
   });

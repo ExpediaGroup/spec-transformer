@@ -16,7 +16,7 @@
 
 import Reader from './Reader';
 import { Key, Value } from '../../model/Types';
-import { parse } from 'yaml';
+import { load } from "js-yaml";
 
 /**
  * A reader implementation for reading the specs in YAML format.
@@ -25,6 +25,6 @@ export class YamlReader implements Reader {
   read(specs: string): Record<Key, Value> {
     if (specs === undefined || specs === null || specs === '') return {};
 
-    return parse(specs);
+    return load(specs) as Record<Key, Value>
   }
 }

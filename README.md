@@ -45,6 +45,7 @@ npx -p @expediagroup/spec-transformer cli --input specs.yaml --output out.yaml -
 ### 3. Build and run spec-transformer locally
 
 ```bash
+npm install
 npm run build
 ```
 

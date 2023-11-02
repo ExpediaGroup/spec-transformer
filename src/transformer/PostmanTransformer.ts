@@ -31,7 +31,9 @@ export class PostmanTransformer implements Transformer {
 
     const options: Options = {
       folderStrategy: 'Tags',
-      requestParametersResolution: 'Example'
+      requestParametersResolution: 'Example',
+      optimizeConversion: false,
+      stackLimit: 50
     };
 
     let result: Record<Key, Value> = {};

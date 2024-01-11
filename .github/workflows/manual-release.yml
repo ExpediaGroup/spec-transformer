@@ -27,7 +27,10 @@ jobs:
     steps:
       - name: Confirm
         if: github.event.inputs.confirm == 'false'
-        run: exit 1
+        run: |
+          echo "You must confirm you want to release!"
+          exit 1
+
       - name: Checkout
         uses: actions/checkout@v4
         with:

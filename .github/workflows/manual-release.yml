@@ -6,11 +6,19 @@ on:
       release-type:
         description: 'Type of Release'
         type: choice
-        default: 'patch'
+        default: 'fix'
         options:
-          - 'major'
-          - 'minor'
-          - 'patch'
+          - 'feat'
+          - 'fix'
+      reason:
+        description: 'Reason for manual release'
+        required: true
+        type: string
+      confirm:
+        description: 'Check this box to confirm you want to release'
+        required: true
+        type: boolean
+        default: false
 
 jobs:
   release:
@@ -37,7 +45,15 @@ jobs:
         run: npm run build && cd dist && ls -la
 
       - name: Run manual release
-        run: cd dist && npx semantic-release --no-ci --release-as ${{ github.event.inputs.release-type }} --force
+        run: |
+          echo "Forcing release with a custom message"
+          cd dist
+          git config --global user.email "eg-oss-ci@expediagroup.com"
+          git config --global user.name "eg-oss-ci"
+          git add .
+          git commit --allow-empty -m "${{ github.event.inputs.release-type }}: ${{ github.event.inputs.reason }}"
+          npx semantic-release --release-as ${{ github.event.inputs.release-type }} --no-ci
+          git revert HEAD
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

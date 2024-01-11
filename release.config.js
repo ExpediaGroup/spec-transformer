@@ -4,11 +4,12 @@ module.exports = {
     ['@semantic-release/commit-analyzer', {
       preset: 'conventionalcommits',
       releaseRules: [
-        { type: 'docs', scope: 'README', release: 'patch', section: 'Other Updates' },
-        { type: 'refactor', release: 'patch', section: 'Other Updates' },
+        { type: 'feat', release: 'minor', section: 'Features' },
+        { type: 'fix', release: 'patch', section: 'Bug Fixes' },
         { type: 'chore', release: 'patch', section: 'Other Updates' },
-        { type: 'chore', section: 'Other Updates' },
-        { scope: 'no-release', release: false }
+        { type: 'refactor', release: 'patch', section: 'Other Updates' },
+        { type: 'docs', release: 'patch', section: 'Other Updates' },
+        { type: 'no-release', release: false }
       ],
       parserOpts: {
         noteKeywords: ['BREAKING CHANGE', 'BREAKING CHANGES', 'BREAKING-CHANGE', 'BREAKING']

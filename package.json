@@ -17,7 +17,7 @@
     "build": "rm -rf dist && npx tsc --pretty && rm -rf dist/test && cp package.json dist/package.json && cp README.md dist/README.md && cp LICENSE dist/LICENSE && cp CONTRIBUTING.md dist/CONTRIBUTING.md",
     "start": "ts-node index.ts",
     "test": "jest",
-    "release": "semantic-release"
+    "semantic-release": "semantic-release"
   },
   "keywords": [
     "openapi",
@@ -45,7 +45,7 @@
     "commander": "11.1.0",
     "js-yaml": "4.1.0",
     "openapi-to-postmanv2": "4.18.0",
-    "openapi3-ts": "3.2.0"
+    "openapi3-ts": "4.2.1"
   },
   "devDependencies": {
     "@semantic-release/changelog": "6.0.3",

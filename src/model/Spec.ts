@@ -16,8 +16,9 @@
 
 import { Key, Ref, Value } from './Types';
 import { HEADER, PARAMETERS, PROPERTIES, REQUEST_BODY, RESPONSES, TAGS } from '../Constants';
-import { ServerObject, TagObject } from 'openapi3-ts';
+import { Server } from 'openapi3-ts';
 import { filter, map } from '../collection/Functions';
+import { TagObject } from 'openapi3-ts/oas30';
 
 /**
  * A representation of API Specifications.
@@ -55,7 +56,7 @@ export default class Spec {
 
   /**
    * Returns the specs with the given tags.
-   * @param tags: the tags to add to the spec.
+   * @param tags to add to the spec.
    * @returns A copy of the `Spec` object with the given tags.
    */
   withTags(tags: string[]): Spec {
@@ -67,7 +68,7 @@ export default class Spec {
 
   /**
    * Returns the specs with the given operation tags.
-   * @param tags: the tags to add to the operations.
+   * @param tags to add to the operations.
    * @returns A copy of the `Spec` object with the given operation tags.
    */
   withOperationTags(tags: string[]): Spec {
@@ -91,9 +92,8 @@ export default class Spec {
   }
 
   /**
-   * Returns the specs with the given headers removed.
-   * @param headersToRemove: the headers to remove.
    * @returns A copy of the `Spec` object with the given headers removed.
+   * @param headersToRemove
    */
   filterHeaders(headersToRemove: string[]): Spec {
     if (!this.specs.paths) return new Spec(this.specs);
@@ -171,12 +171,12 @@ export default class Spec {
 
     let schema;
     if (this.isRef(schemaValue)) {
-      schema = this.buildOneOfSchema(schemaValue, mappings)
+      schema = this.buildOneOfSchema(schemaValue, mappings);
     } else if (this.containsItems(schemaValue)) {
       schema = {
         ...schemaValue,
         items: this.buildOneOfSchema(schemaValue.items, mappings)
-      }
+      };
     } else return operationFieldValue;
 
     return {
@@ -202,12 +202,12 @@ export default class Spec {
 
       let schema;
       if (this.isRef(schemaValue)) {
-        schema = this.buildOneOfSchema(schemaValue, mappings)
+        schema = this.buildOneOfSchema(schemaValue, mappings);
       } else if (this.containsItems(schemaValue)) {
         schema = {
           ...schemaValue,
           items: this.buildOneOfSchema(schemaValue.items, mappings)
-        }
+        };
       } else return [response, responseFields];
 
       return [response, {
@@ -231,7 +231,7 @@ export default class Spec {
 
     return {
       oneOf: this.buildOneOfList(mappings.get(name))
-    }
+    };
   }
 
   private buildOneOfProperty(properties: Value, mappings: Record<Key, Value>): Record<Key, Value> {
@@ -275,12 +275,12 @@ export default class Spec {
   }
 
   private isDefinedInParent = (child: string, parent: string): boolean => {
-    const extractComponentName = (ref: string): string => ref.slice(ref.lastIndexOf('/') + 1)
+    const extractComponentName = (ref: string): string => ref.slice(ref.lastIndexOf('/') + 1);
 
     const discriminatorMappings: string[] = this.getDiscriminatorMappings(parent);
     return !!discriminatorMappings.map((item: string) => extractComponentName(item))
       .find((value: string): boolean => value === child);
-  }
+  };
 
   private getDiscriminatorMappings = (componentName: string): string[] => {
     const schema = this.specs.components.schemas[componentName];
@@ -298,7 +298,7 @@ export default class Spec {
       );
     }
     return mappings;
-  }
+  };
 
   private getRefComponentName = (item: any) => item.$ref.slice(item.$ref.lastIndexOf('/') + 1);
 
@@ -348,7 +348,7 @@ export default class Spec {
 
   private prependSlash = (path: string): string => path.startsWith('/') ? path : '/' + path;
 
-  private extractPrefix = (servers: ServerObject[]): string => {
+  private extractPrefix = (servers: Server[]): string => {
     const server = servers[0];
     return new URL(server.url).pathname;
   };

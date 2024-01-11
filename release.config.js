@@ -1,13 +1,14 @@
 module.exports = {
-  branches: ['main'], plugins: [
+  branches: ['main'],
+  plugins: [
     ['@semantic-release/commit-analyzer', {
       preset: 'conventionalcommits',
       releaseRules: [
-        { 'type': 'docs', 'scope': 'README', 'release': 'patch', section: 'Other Updates' },
-        { 'type': 'refactor', 'release': 'patch',section: 'Other Updates' },
-        { 'type': 'chore', 'release': 'patch', section: 'Other Updates' },
+        { type: 'docs', scope: 'README', release: 'patch', section: 'Other Updates' },
+        { type: 'refactor', release: 'patch', section: 'Other Updates' },
+        { type: 'chore', release: 'patch', section: 'Other Updates' },
         { type: 'chore', section: 'Other Updates' },
-        { 'scope': 'no-release', 'release': false }
+        { scope: 'no-release', release: false }
       ],
       parserOpts: {
         noteKeywords: ['BREAKING CHANGE', 'BREAKING CHANGES', 'BREAKING-CHANGE', 'BREAKING']

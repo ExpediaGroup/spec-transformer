@@ -1,0 +1,43 @@
+name: Manual Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      release-type:
+        description: 'Type of Release'
+        required: true
+        default: 'patch'
+        options:
+        - 'major'
+        - 'minor'
+        - 'patch'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run unit tests
+        run: npm test
+        env:
+          CI: true
+
+      - name: Build
+        run: npm run build && cd dist && ls -la
+
+      - name: Run manual release
+        run: cd dist && npx semantic-release -- --no-ci --release-as ${{ github.event.inputs.release-type }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

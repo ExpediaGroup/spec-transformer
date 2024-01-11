@@ -15,7 +15,7 @@ on:
         required: true
         type: string
       confirm:
-        description: 'Are you sure you want to release?'
+        description: 'Check this box to confirm you want to release'
         required: true
         type: boolean
         default: false

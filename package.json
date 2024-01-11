@@ -32,11 +32,6 @@
     "'Mohammad Noor' AbuKhleif <moh.noor94@gmail.com> (https://github.com/mohnoor94)",
     "Osama Salman <osama.salman99@gmail.com> (https://github.com/osama-salman99)"
   ],
-  "release": {
-    "branches": [
-      "main"
-    ]
-  },
   "publishConfig": {
     "access": "public"
   },

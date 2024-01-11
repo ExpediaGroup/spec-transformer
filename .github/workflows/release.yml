@@ -21,7 +21,7 @@ jobs:
         env:
           CI: true
       - name: Build
-        run: npm run build && cd dist && ls -la
+        run: npm run build && ls -la
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}

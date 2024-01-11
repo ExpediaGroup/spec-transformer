@@ -26,4 +26,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: cd dist && npx semantic-release
+        run: npx semantic-release

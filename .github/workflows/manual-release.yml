@@ -5,8 +5,8 @@ on:
     inputs:
       release-type:
         description: 'Type of Release'
-        required: true
         type: choice
+        default: 'patch'
         options:
           - 'major'
           - 'minor'
@@ -37,7 +37,7 @@ jobs:
         run: npm run build && cd dist && ls -la
 
       - name: Run manual release
-        run: cd dist && npx semantic-release --no-ci --release-as ${{ github.event.inputs.release-type }}
+        run: cd dist && npx semantic-release --no-ci --release-as ${{ github.event.inputs.release-type }} --force
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

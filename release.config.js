@@ -3,9 +3,10 @@ module.exports = {
     ['@semantic-release/commit-analyzer', {
       preset: 'conventionalcommits',
       releaseRules: [
-        { 'type': 'docs', 'scope': 'README', 'release': 'patch' },
-        { 'type': 'refactor', 'release': 'patch' },
-        { 'type': 'chore', 'release': 'patch' },
+        { 'type': 'docs', 'scope': 'README', 'release': 'patch', section: 'Other Updates' },
+        { 'type': 'refactor', 'release': 'patch',section: 'Other Updates' },
+        { 'type': 'chore', 'release': 'patch', section: 'Other Updates' },
+        { type: 'chore', section: 'Other Updates' },
         { 'scope': 'no-release', 'release': false }
       ],
       parserOpts: {

@@ -1,6 +1,6 @@
 {
   "name": "@expediagroup/spec-transformer",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "description": "API Spec Transformer",
   "repository": {
     "type": "git",
@@ -14,7 +14,7 @@
   },
   "scripts": {
     "add-headers": "scripts/add-headers.sh",
-    "build": "rm -rf dist && npx tsc --pretty && rm -rf dist/test",
+    "build": "rm -rf dist && npx tsc --pretty",
     "start": "ts-node index.ts",
     "test": "jest",
     "semantic-release": "semantic-release"

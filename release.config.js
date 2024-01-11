@@ -37,7 +37,6 @@ module.exports = {
         'LICENSE',
         'README.md',
         'CONTRIBUTING.md',
-        'dist/**/*',
         'src/**/*'
       ]
     }]

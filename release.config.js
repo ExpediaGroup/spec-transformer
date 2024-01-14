@@ -1,4 +1,3 @@
-const { message } = require('@semantic-release/git/lib/resolve-config');
 module.exports = {
   branches: ['main', 'test'],
   plugins: [
@@ -39,7 +38,7 @@ module.exports = {
     [
       '@semantic-release/exec',
       {
-        successCmd: 'mv CHANGELOG.md ../CHANGELOG.md && mv package.json ../package.json && ls -a && echo "-----" && ls -a ../',
+        successCmd: 'mv CHANGELOG.md ../CHANGELOG.md && mv package.json ../package.json',
       }
     ]
   ]

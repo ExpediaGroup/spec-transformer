@@ -31,8 +31,7 @@ module.exports = {
     [
       '@semantic-release/exec',
       {
-        publishCmd: 'touch test && mv ../package.json ./package.json && mv ../CHANGELOG.md ./CHANGELOG.md',
-        message: '${nextRelease.version} [skip ci]\n\n${nextRelease.notes}'
+        publishCmd: 'mv ../package.json ./package.json && mv ../CHANGELOG.md ./CHANGELOG.md',
       },
     ],
     '@semantic-release/git',

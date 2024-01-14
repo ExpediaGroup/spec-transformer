@@ -1,6 +1,6 @@
 {
   "name": "@expediagroup/spec-transformer",
-  "version": "1.7.9",
+  "version": "1.7.10",
   "description": "API Spec Transformer",
   "repository": {
     "type": "git",
@@ -14,10 +14,10 @@
   },
   "scripts": {
     "add-headers": "scripts/add-headers.sh",
-    "build": "rm -rf dist && npx tsc --pretty && rm -rf dist/test && cp package.json dist/package.json && cp README.md dist/README.md && cp LICENSE dist/LICENSE && cp CONTRIBUTING.md dist/CONTRIBUTING.md && cp CHANGELOG.md dist/CHANGELOG.md",
+    "build": "rm -rf dist && npx tsc --pretty && rm -rf dist/test && cp package.json dist/package.json && cp README.md dist/README.md && cp LICENSE dist/LICENSE && cp CONTRIBUTING.md dist/CONTRIBUTING.md",
     "start": "ts-node index.ts",
     "test": "jest",
-    "semantic-release": "semantic-release"
+    "release": "semantic-release"
   },
   "keywords": [
     "openapi",

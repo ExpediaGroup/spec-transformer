@@ -13,8 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cp ./dist/CHANGELOG.md ./CHANGELOG.md
-cp ./dist/package.json ./package.json
+ls -al
+echo "----------------------------"
+cp dist/CHANGELOG.md ./CHANGELOG.md
+cp dist/package.json ./package.json
 git add CHANGELOG.md package.json
 git commit -m "chore(release): update assets [skip ci]"
 git status

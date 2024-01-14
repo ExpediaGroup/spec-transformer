@@ -38,7 +38,7 @@ module.exports = {
     [
       '@semantic-release/exec',
       {
-        successCmd: 'sh ./scripts/update-assets.sh'
+        successCmd: 'sh ../scripts/update-assets.sh'
       }
     ]
   ]

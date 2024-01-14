@@ -1,3 +1,11 @@
+## [1.7.3](https://github.com/ExpediaGroup/spec-transformer/compare/v1.7.2...v1.7.3) (2024-01-14)
+
+
+### Bug Fixes
+
+* update package settings ([f957c78](https://github.com/ExpediaGroup/spec-transformer/commit/f957c7801a62cfad00c0e315da3fa47be56ac493))
+* update package settings ([5d4c281](https://github.com/ExpediaGroup/spec-transformer/commit/5d4c281ce7a1d727d6c701de46075645b9cceb8c))
+
 ## [1.7.2](https://github.com/ExpediaGroup/spec-transformer/compare/v1.7.1...v1.7.2) (2024-01-11)
 
 

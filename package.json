@@ -36,7 +36,7 @@
     "access": "public"
   },
   "files": [
-    "dist"
+    "dist/*"
   ],
   "license": "Apache-2.0",
   "dependencies": {

@@ -31,8 +31,8 @@ module.exports = {
       '@semantic-release/exec',
       {
         publishCmd: [
-          '../package.json ./package.json',
-          '../CHANGELOG.md ./CHANGELOG.md', // Add the CHANGELOG copy
+          'cp ../package.json ./package.json',
+          'cp ../CHANGELOG.md ./CHANGELOG.md', // Add the CHANGELOG copy
         ],
       },
     ],

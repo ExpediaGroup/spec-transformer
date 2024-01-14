@@ -29,17 +29,17 @@ module.exports = {
     }],
     '@semantic-release/npm',
     '@semantic-release/github',
+    [
+      '@semantic-release/exec',
+      {
+        successCmd: 'sh ../scripts/update-assets.sh'
+      }
+    ],
     ['@semantic-release/git', {
       assets: [
         'package.json',
         'CHANGELOG.md'
       ]
     }],
-    [
-      '@semantic-release/exec',
-      {
-        successCmd: 'sh ../scripts/update-assets.sh'
-      }
-    ]
   ]
 };

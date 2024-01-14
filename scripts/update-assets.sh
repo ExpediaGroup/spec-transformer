@@ -21,7 +21,7 @@ rm -rf dist
 echo "Git config"
 git config user.name
 git config user.email
-echo "Git status"
+echo "---------------------"
 
 git pull
 git status

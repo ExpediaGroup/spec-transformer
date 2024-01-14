@@ -34,10 +34,6 @@ module.exports = {
       assets: [
         'package.json',
         'CHANGELOG.md',
-        'LICENSE',
-        'README.md',
-        'CONTRIBUTING.md',
-        'src/**/*'
       ]
     }]
   ]

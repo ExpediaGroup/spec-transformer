@@ -1,6 +1,6 @@
 {
   "name": "@expediagroup/spec-transformer",
-  "version": "1.7.10",
+  "version": "1.7.11",
   "description": "API Spec Transformer",
   "repository": {
     "type": "git",
@@ -35,9 +35,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "files": [
-    "dist/*"
-  ],
   "license": "Apache-2.0",
   "dependencies": {
     "commander": "11.1.0",

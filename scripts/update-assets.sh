@@ -21,4 +21,4 @@ git pull
 git status
 git add CHANGELOG.md package.json dist
 git commit --amend --no-edit
-git push
+git push --force

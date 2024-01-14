@@ -27,16 +27,23 @@ module.exports = {
     ['@semantic-release/changelog', {
       'changelogFile': 'CHANGELOG.md'
     }],
+    [
+      '@semantic-release/exec',
+      {
+        prepareCmd: 'cp dist/package.json ./package.json && cp CHANGELOG.md dist/CHANGELOG.md'
+      },
+    ],
+    '@semantic-release/git',
     '@semantic-release/npm',
     '@semantic-release/github',
     ['@semantic-release/git', {
       message: '${nextRelease.version} CHANGELOG [skip ci]\n\n${nextRelease.notes}',
       assets: [
-        '../package.json',
-        '../CHANGELOG.md',
-        '../LICENSE',
-        '../README.md',
-        '../CONTRIBUTING.md',
+        'package.json',
+        'CHANGELOG.md',
+        'LICENSE',
+        'README.md',
+        'CONTRIBUTING.md',
         'src/**/*'
       ]
     }]

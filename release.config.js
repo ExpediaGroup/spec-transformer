@@ -30,7 +30,7 @@ module.exports = {
     [
       '@semantic-release/exec',
       {
-        prepareCmd: 'cp dist/package.json ./package.json && cp CHANGELOG.md dist/CHANGELOG.md'
+        prepareCmd: 'cp package.json ../ && cp CHANGELOG.md ../'
       },
     ],
     '@semantic-release/git',

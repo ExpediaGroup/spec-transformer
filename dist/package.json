@@ -1,0 +1,96 @@
+{
+  "name": "@expediagroup/spec-transformer",
+  "version": "1.7.26",
+  "description": "API Spec Transformer",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ExpediaGroup/spec-transformer.git"
+  },
+  "main": "index.js",
+  "types": "index.d.ts",
+  "bin": {
+    "lib": "index.js",
+    "cli": "cli.js"
+  },
+  "scripts": {
+    "add-headers": "scripts/add-headers.sh",
+    "build": "rm -rf dist && npx tsc --pretty && rm -rf dist/test && cp package.json dist/package.json && cp README.md dist/README.md && cp LICENSE dist/LICENSE && cp CONTRIBUTING.md dist/CONTRIBUTING.md",
+    "start": "ts-node index.ts",
+    "test": "jest",
+    "semantic-release": "semantic-release"
+  },
+  "keywords": [
+    "openapi",
+    "api",
+    "specifications",
+    "transformer",
+    "specs",
+    "mapping"
+  ],
+  "author": "Expedia Group <oss@expediagroup.com>",
+  "contributors": [
+    "'Mohammad Noor' AbuKhleif <moh.noor94@gmail.com> (https://github.com/mohnoor94)",
+    "Osama Salman <osama.salman99@gmail.com> (https://github.com/osama-salman99)"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {
+    "commander": "11.1.0",
+    "js-yaml": "4.1.0",
+    "openapi-to-postmanv2": "4.18.0",
+    "openapi3-ts": "4.2.1"
+  },
+  "devDependencies": {
+    "@semantic-release/changelog": "6.0.3",
+    "@semantic-release/commit-analyzer": "11.1.0",
+    "@semantic-release/exec": "6.0.3",
+    "@semantic-release/git": "10.0.1",
+    "@semantic-release/github": "9.2.6",
+    "@semantic-release/npm": "11.0.2",
+    "@semantic-release/release-notes-generator": "12.1.0",
+    "@types/jest": "29.5.11",
+    "@types/js-yaml": "4.0.9",
+    "@types/node": "20.11.0",
+    "@types/openapi-to-postmanv2": "3.2.4",
+    "conventional-changelog-conventionalcommits": "7.0.2",
+    "jest": "29.7.0",
+    "prettier": "3.1.1",
+    "semantic-release": "22.0.12",
+    "ts-jest": "29.1.1",
+    "ts-node": "10.9.2",
+    "typescript": "5.3.3"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "printWidth": 120
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "collectCoverage": true,
+    "coverageReporters": [
+      "json",
+      "text",
+      "lcov",
+      "clover",
+      "json-summary"
+    ],
+    "testMatch": [
+      "**/test/**/*.test.ts"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "statements": 90,
+        "branches": 90,
+        "functions": 90,
+        "lines": 90
+      }
+    }
+  },
+  "bugs": {
+    "url": "https://github.com/ExpediaGroup/spec-transformer/issues"
+  },
+  "homepage": "https://github.com/ExpediaGroup/spec-transformer#readme"
+}

@@ -17,13 +17,14 @@ cp CHANGELOG.md ../CHANGELOG.md
 cp package.json ../package.json
 cd ..
 rm -rf dist
+
+echo "Git config"
+git config user.name
+git config user.email
+echo "---------------------"
+
 git pull
+git status
 git add CHANGELOG.md package.json dist
-
-timestamp=$(date +"%Y%m%d%H%M%S")
-branch_name="update-assets-$timestamp"
-
-git checkout -b "$branch_name"
-git commit -m "chore(release): update assets"
-git push origin "$branch_name"
-gh pr create --base main --head your-feature-branch --title "chore(release): update assets" --body "Updating Release Assets (CHANGELOG.md, package.json, dist)"
+git commit --amend --no-edit
+git push --force

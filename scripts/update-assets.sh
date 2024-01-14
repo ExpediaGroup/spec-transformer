@@ -13,14 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ls -al
-echo "----------------------------"
 cp CHANGELOG.md ../CHANGELOG.md
 cp package.json ../package.json
 cd ..
-ls -al
-echo "--------------------------------------------------------"
-git add CHANGELOG.md package.json
+rm -rf dist
+git add CHANGELOG.md package.json dist
 git commit -m "chore(release): update assets [skip ci]"
 git status
 git push

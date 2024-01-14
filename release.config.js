@@ -33,8 +33,14 @@ module.exports = {
     ['@semantic-release/git', {
       assets: [
         'package.json',
-        'CHANGELOG.md',
+        'CHANGELOG.md'
       ]
-    }]
+    }],
+    [
+      '@semantic-release/exec',
+      {
+        prepareCmd: 'mv CHANGELOG.md ../CHANGELOG.md && mv package.json ../package.json',
+      }
+    ]
   ]
 };

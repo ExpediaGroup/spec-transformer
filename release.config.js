@@ -28,12 +28,6 @@ module.exports = {
     ['@semantic-release/changelog', {
       'changelogFile': 'CHANGELOG.md'
     }],
-    [
-      '@semantic-release/exec',
-      {
-        publishCmd: 'mv ../package.json ./package.json && mv ../CHANGELOG.md ./CHANGELOG.md',
-      },
-    ],
     '@semantic-release/git',
     '@semantic-release/npm',
     '@semantic-release/github',

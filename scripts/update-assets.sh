@@ -18,7 +18,7 @@ cp package.json ../package.json
 cd ..
 rm -rf dist
 git pull
+git status
 git add CHANGELOG.md package.json dist
 git commit --amend --no-edit
-git status
 git push

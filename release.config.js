@@ -1,3 +1,4 @@
+const { message } = require('@semantic-release/git/lib/resolve-config');
 module.exports = {
   branches: ['main', 'test'],
   plugins: [
@@ -30,7 +31,8 @@ module.exports = {
     [
       '@semantic-release/exec',
       {
-        publishCmd: 'cp ../package.json ./package.json && cp ../CHANGELOG.md ./CHANGELOG.md'
+        publishCmd: 'touch test && mv ../package.json ./package.json && mv ../CHANGELOG.md ./CHANGELOG.md',
+        message: '${nextRelease.version} [skip ci]\n\n${nextRelease.notes}'
       },
     ],
     '@semantic-release/git',

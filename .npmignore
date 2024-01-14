@@ -7,3 +7,4 @@ scripts
 LICENSE_header.txt
 tsconfig.json
 dist/test
+dist/src

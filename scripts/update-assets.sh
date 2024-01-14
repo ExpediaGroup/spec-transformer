@@ -13,8 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-mv CHANGELOG.md ../CHANGELOG.md
-mv package.json ../package.json
+mv dist/CHANGELOG.md ./CHANGELOG.md
+mv dist/package.json ./package.json
 git add ../CHANGELOG.md ../package.json
 git commit -m "chore(release): update assets [skip ci]"
 git status

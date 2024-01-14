@@ -35,6 +35,9 @@
   "publishConfig": {
     "access": "public"
   },
+  "files": [
+    "dist"
+  ],
   "license": "Apache-2.0",
   "dependencies": {
     "commander": "11.1.0",

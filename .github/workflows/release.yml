@@ -26,10 +26,14 @@ jobs:
           CI: true
 
       - name: Build
-        run: npm run build && ls -la
+        run: npm run build && cd dist && ls -la
 
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npx semantic-release
+        run: |
+          cd dist
+          npx semantic-release
+          cp package.json package-lock.json ../
+          cp CHANGELOG.md ../

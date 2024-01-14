@@ -1,6 +1,6 @@
 {
   "name": "@expediagroup/spec-transformer",
-  "version": "1.7.9",
+  "version": "1.7.11",
   "description": "API Spec Transformer",
   "repository": {
     "type": "git",

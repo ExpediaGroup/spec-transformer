@@ -15,8 +15,11 @@
 
 ls -al
 echo "----------------------------"
-cp dist/CHANGELOG.md ./CHANGELOG.md
-cp dist/package.json ./package.json
+cp CHANGELOG.md ../CHANGELOG.md
+cp package.json ../package.json
+cd ..
+ls -al
+echo "--------------------------------------------------------"
 git add CHANGELOG.md package.json
 git commit -m "chore(release): update assets [skip ci]"
 git status

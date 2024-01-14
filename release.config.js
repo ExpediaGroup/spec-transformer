@@ -1,5 +1,5 @@
 module.exports = {
-  branches: ['main'],
+  branches: ['main', 'test'],
   plugins: [
     ['@semantic-release/commit-analyzer', {
       preset: 'conventionalcommits',
@@ -29,16 +29,17 @@ module.exports = {
     }],
     '@semantic-release/npm',
     '@semantic-release/github',
+    [
+      '@semantic-release/exec',
+      {
+        successCmd: 'sh ../scripts/update-assets.sh'
+      }
+    ],
     ['@semantic-release/git', {
-      message: '${nextRelease.version} CHANGELOG [skip ci]\n\n${nextRelease.notes}',
       assets: [
         'package.json',
-        'CHANGELOG.md',
-        'LICENSE',
-        'README.md',
-        'CONTRIBUTING.md',
-        'src/**/*'
+        'CHANGELOG.md'
       ]
-    }]
+    }],
   ]
 };

@@ -33,6 +33,7 @@ import { YamlWriter } from './src/io/writer/YamlWriter';
 
 import { Command } from 'commander';
 import * as fs from 'fs';
+import { version } from './package.json';
 
 const appName = 'Spec Transformer';
 const optionNames = {
@@ -49,7 +50,7 @@ const optionNames = {
 
 function buildCommand(): Command {
   const program = new Command();
-  program.version('1.0.0')
+  program.version(version)
     .description(`${appName} CLI`)
     .option(`-i, --${optionNames.input} [value]`, 'Input file path')
     .option(`-if, --${optionNames.inputFormat} [value]`, 'Input file format. Supported formats: json, yaml. Default: yaml')

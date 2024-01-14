@@ -35,7 +35,3 @@ jobs:
         run: |
           cd dist
           npx semantic-release
-          cp package.json ../
-          cp CHANGELOG.md ../
-          cd ../
-          rm -rf dist

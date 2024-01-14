@@ -17,12 +17,6 @@ cp CHANGELOG.md ../CHANGELOG.md
 cp package.json ../package.json
 cd ..
 rm -rf dist
-
-echo "Git config"
-git config user.name
-git config user.email
-echo "---------------------"
-
 git pull
 git status
 git add CHANGELOG.md package.json dist

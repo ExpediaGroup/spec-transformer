@@ -17,3 +17,5 @@ mv CHANGELOG.md ../CHANGELOG.md
 mv package.json ../package.json
 git add ../CHANGELOG.md ../package.json
 git commit -m "chore(release): update assets [skip ci]"
+git status
+git push

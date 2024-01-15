@@ -167,7 +167,9 @@
       [
         "@semantic-release/exec",
         {
-          "successCmd": "sh ../scripts/update-assets.sh"
+          "successCmd": "sh ../scripts/update-assets.sh",
+          "failCmd": "sh ../scripts/delete-assets.sh",
+          "prepareCmd": "sh ../scripts/delete-headers.sh"
         }
       ],
       [

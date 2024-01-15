@@ -43,6 +43,7 @@
     "openapi3-ts": "4.2.1"
   },
   "devDependencies": {
+    "@semantic-release/changelog": "6.0.3",
     "@semantic-release/commit-analyzer": "11.1.0",
     "@semantic-release/exec": "6.0.3",
     "@semantic-release/git": "10.0.1",
@@ -160,6 +161,12 @@
               "scope"
             ]
           }
+        }
+      ],
+      [
+        "@semantic-release/changelog",
+        {
+          "changelogFile": "CHANGELOG.md"
         }
       ],
       "@semantic-release/npm",

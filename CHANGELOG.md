@@ -1,6 +1,6 @@
-## [1.7.45](https://github.com/ExpediaGroup/spec-transformer/compare/v1.7.44...v1.7.45) (2024-01-14)
+## [1.8.2](https://github.com/ExpediaGroup/spec-transformer/compare/v1.8.1...v1.8.2) (2024-01-15)
 
 
 ### Bug Fixes
 
-* change update assets script author ([574992f](https://github.com/ExpediaGroup/spec-transformer/commit/574992f9d7e54a881210c2e95066107994c0e1a1))
+* update post-release actions ([f3ecd71](https://github.com/ExpediaGroup/spec-transformer/commit/f3ecd718658d8352b7fff91ded71d96bf4bbe4d2))

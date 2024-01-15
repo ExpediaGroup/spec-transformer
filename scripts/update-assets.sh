@@ -26,4 +26,3 @@ git pull
 git add package.json dist
 git commit --amend --no-edit
 git push --force
-

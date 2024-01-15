@@ -17,12 +17,6 @@ cp CHANGELOG.md ../CHANGELOG.md
 cp package.json ../package.json
 cd ..
 rm -rf dist
-
-git config --global user.name "eg-oss-ci"
-git config --global user.email "oss@expediagroup.com"
-git config --global credential.helper "store --file=$HOME/.git-credentials"
-echo "https://github.com:${GH_TOKEN}@github.com" > $HOME/.git-credentials
-
 git pull
 git add CHANGELOG.md package.json dist
 git commit --amend --no-edit

@@ -27,3 +27,4 @@ git pull
 git add CHANGELOG.md package.json dist
 git commit --amend --no-edit
 git push --force
+

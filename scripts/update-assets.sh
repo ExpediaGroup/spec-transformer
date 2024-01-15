@@ -13,6 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+cp CHANGELOG.md ../CHANGELOG.md
 cp package.json ../package.json
 cd ..
 rm -rf dist
@@ -23,6 +24,6 @@ git config --global credential.helper "store --file=$HOME/.git-credentials"
 echo "https://github.com:${GH_TOKEN}@github.com" > "$HOME/.git-credentials"
 
 git pull
-git add package.json dist
+git add CHANGELOG.md package.json dist
 git commit --amend --no-edit
 git push --force

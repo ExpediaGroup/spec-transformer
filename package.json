@@ -116,17 +116,17 @@
             },
             {
               "type": "chore",
-              "release": false,
+              "release": "patch",
               "section": "Other Updates"
             },
             {
               "type": "refactor",
-              "release": false,
+              "release": "patch",
               "section": "Other Updates"
             },
             {
               "type": "docs",
-              "release": false,
+              "release": "patch",
               "section": "Other Updates"
             },
             {
@@ -172,19 +172,18 @@
       "@semantic-release/npm",
       "@semantic-release/github",
       [
-        "@semantic-release/git",
+        "@semantic-release/exec",
         {
-          "assets": [
-            "package.json"
-          ]
+          "successCmd": "sh ../scripts/update-assets.sh"
         }
       ],
       [
-        "@semantic-release/exec",
+        "@semantic-release/git",
         {
-          "successCmd": "sh ../scripts/update-assets.sh",
-          "failCmd": "sh ../scripts/delete-assets.sh",
-          "prepareCmd": "sh ../scripts/delete-assets.sh"
+          "assets": [
+            "package.json",
+            "CHANGELOG.md"
+          ]
         }
       ]
     ]

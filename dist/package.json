@@ -115,17 +115,17 @@
             },
             {
               "type": "chore",
-              "release": "patch",
+              "release": false,
               "section": "Other Updates"
             },
             {
               "type": "refactor",
-              "release": "patch",
+              "release": false,
               "section": "Other Updates"
             },
             {
               "type": "docs",
-              "release": "patch",
+              "release": false,
               "section": "Other Updates"
             },
             {

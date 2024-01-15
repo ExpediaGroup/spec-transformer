@@ -169,7 +169,7 @@
         {
           "successCmd": "sh ../scripts/update-assets.sh",
           "failCmd": "sh ../scripts/delete-assets.sh",
-          "prepareCmd": "sh ../scripts/delete-headers.sh"
+          "prepareCmd": "sh ../scripts/delete-assets.sh"
         }
       ],
       [

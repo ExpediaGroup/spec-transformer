@@ -1,6 +1,6 @@
-## [1.8.5](https://github.com/ExpediaGroup/spec-transformer/compare/v1.8.4...v1.8.5) (2024-01-15)
+## [1.9.1](https://github.com/ExpediaGroup/spec-transformer/compare/v1.9.0...v1.9.1) (2024-1-15)
 
 
 ### Bug Fixes
 
-* update post-release actions ([a931375](https://github.com/ExpediaGroup/spec-transformer/commit/a9313751bd411b3ea5e61e32de4f7bcd063511d6))
+* dummy update ([59e28c7](https://github.com/ExpediaGroup/spec-transformer/commit/59e28c7c3d0b9f15f8284b7e40c441124cf2b7c7))

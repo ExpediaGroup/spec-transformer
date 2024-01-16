@@ -106,28 +106,28 @@
           "releaseRules": [
             {
               "type": "feat",
-              "release": "minor",
-              "section": "Features"
+              "section": "Features",
+              "release": "minor"
             },
             {
               "type": "fix",
-              "release": "patch",
-              "section": "Bug Fixes"
+              "section": "Bug Fixes",
+              "release": "patch"
             },
             {
               "type": "chore",
-              "release": "patch",
-              "section": "Other Updates"
+              "section": "Other Updates",
+              "release": false
             },
             {
               "type": "refactor",
-              "release": "patch",
-              "section": "Other Updates"
+              "section": "Other Updates",
+              "release": false
             },
             {
               "type": "docs",
-              "release": "patch",
-              "section": "Other Updates"
+              "section": "Other Updates",
+              "release": false
             },
             {
               "type": "no-release",

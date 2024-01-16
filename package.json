@@ -107,12 +107,12 @@
             {
               "type": "feat",
               "section": "Features",
-              "release": "minor",
+              "release": "minor"
             },
             {
               "type": "fix",
               "section": "Bug Fixes",
-              "release": "patch",
+              "release": "patch"
             },
             {
               "type": "chore",

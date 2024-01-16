@@ -116,17 +116,14 @@
             },
             {
               "type": "chore",
-              "release": "patch",
               "section": "Other Updates"
             },
             {
               "type": "refactor",
-              "release": "patch",
               "section": "Other Updates"
             },
             {
               "type": "docs",
-              "release": "patch",
               "section": "Other Updates"
             },
             {

@@ -106,25 +106,28 @@
           "releaseRules": [
             {
               "type": "feat",
+              "section": "Features",
               "release": "minor",
-              "section": "Features"
             },
             {
               "type": "fix",
+              "section": "Bug Fixes",
               "release": "patch",
-              "section": "Bug Fixes"
             },
             {
               "type": "chore",
-              "section": "Other Updates"
+              "section": "Other Updates",
+              "release": false
             },
             {
               "type": "refactor",
-              "section": "Other Updates"
+              "section": "Other Updates",
+              "release": false
             },
             {
               "type": "docs",
-              "section": "Other Updates"
+              "section": "Other Updates",
+              "release": false
             },
             {
               "type": "no-release",

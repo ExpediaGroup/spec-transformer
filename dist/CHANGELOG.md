@@ -1,4 +1,4 @@
-## [1.9.1](https://github.com/ExpediaGroup/spec-transformer/compare/v1.9.0...v1.9.1) (2024-1-16)
+## [1.9.1](https://github.com/ExpediaGroup/spec-transformer/compare/v1.9.0...v1.9.1) (2024-1-17)
 
 
 ### Bug Fixes

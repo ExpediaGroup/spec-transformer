@@ -71,7 +71,8 @@
       {
         "assets": [
           "package.json",
-          "CHANGELOG.md"
+          "CHANGELOG.md",
+          ".releaserc.json"
         ]
       }
     ]

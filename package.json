@@ -14,7 +14,7 @@
   },
   "scripts": {
     "add-headers": "scripts/add-headers.sh",
-    "build": "rm -rf dist && npx tsc --pretty && rm -rf dist/test && cp package.json dist/package.json && cp README.md dist/README.md && cp LICENSE dist/LICENSE && cp CONTRIBUTING.md dist/CONTRIBUTING.md",
+    "build": "rm -rf dist && npx tsc --pretty && rm -rf dist/test && cp package.json dist/package.json && cp README.md dist/README.md && cp LICENSE dist/LICENSE && cp CONTRIBUTING.md dist/CONTRIBUTING.md && cp .releaserc.json dist/.releaserc.json",
     "start": "ts-node index.ts",
     "test": "jest",
     "semantic-release": "semantic-release"
@@ -50,7 +50,7 @@
     "@semantic-release/github": "9.2.6",
     "@semantic-release/npm": "11.0.2",
     "@semantic-release/release-notes-generator": "12.1.0",
-    "@types/jest": "29.5.11",
+    "@types/jest": "29.5.12",
     "@types/js-yaml": "4.0.9",
     "@types/node": "20.11.16",
     "@types/openapi-to-postmanv2": "3.2.4",

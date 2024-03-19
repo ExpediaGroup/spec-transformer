@@ -1,6 +1,6 @@
-## [1.9.1](https://github.com/ExpediaGroup/spec-transformer/compare/v1.9.0...v1.9.1) (2024-1-15)
+## [1.9.2](https://github.com/ExpediaGroup/spec-transformer/compare/v1.9.1...v1.9.2) (2024-03-19)
 
 
 ### Bug Fixes
 
-* dummy update ([59e28c7](https://github.com/ExpediaGroup/spec-transformer/commit/59e28c7c3d0b9f15f8284b7e40c441124cf2b7c7))
+* **deps:** update dependencies openapi3-ts from v4.2.1 to v4.2.2 ([#225](https://github.com/ExpediaGroup/spec-transformer/issues/225)) ([935829f](https://github.com/ExpediaGroup/spec-transformer/commit/935829f403b2966a14ea45eaa56faf8250905e91))

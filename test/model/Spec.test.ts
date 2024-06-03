@@ -108,6 +108,50 @@ describe('test Spec - Basic Tests', () => {
     });
   });
 
+  describe('test withOperationIdsAsTags', () => {
+    it('should return the same input if no paths defined', () => {
+      const specs = {
+        openapi: '3.0.0',
+        info: {
+          title: 'Example API',
+          version: '1.0.0'
+        }
+      };
+      expect(new Spec(specs).withOperationIdsAsTags().records()).toEqual(specs);
+    });
+
+    it('should return the same input if no operation tags defined', () => {
+      const specs = {
+        openapi: '3.0.0',
+        info: {
+          title: 'Example API',
+          version: '1.0.0'
+        },
+        paths: {
+          '/hello': {
+            get: {
+              summary: 'Say hello',
+              responses: {
+                '200': {
+                  description: 'A greeting message',
+                  content: {
+                    'text/plain': {
+                      schema: {
+                        type: 'string'
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      };
+      expect(new Spec(specs).withOperationIdsAsTags().records()).toEqual(specs);
+    });
+
+  })
+
   describe('test filterHeaders()', () => {
     it('should return the same input if no headers to remove are provided', () => {
       const specs = {

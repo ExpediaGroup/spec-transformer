@@ -20,6 +20,7 @@ import Transformer from './src/transformer/Transformer';
 import { EndpointTransformer } from './src/transformer/EndpointTransformer';
 import { TransformerChain } from './src/facade/TransformerChain';
 import { TagsSettingTransformer } from './src/transformer/TagsSettingTransformer';
+import { OperationIdsToTagsTransformer } from './src/transformer/OperationIdsToTagsTransformer';
 import { OneOfSettingTransformer } from './src/transformer/OneOfSettingTransformer';
 import { PostmanTransformer } from './src/transformer/PostmanTransformer';
 import { COMMON_UNWANTED_HEADERS, HeaderRemovalTransformer } from './src/transformer/HeaderRemovalTransformer';
@@ -45,7 +46,8 @@ const optionNames = {
   headers: 'headers',
   oneOf: 'oneOf',
   postman: 'postman',
-  endpoint: 'endpoint'
+  endpoint: 'endpoint',
+  operationIdsToTags: 'operationIdsToTags'
 };
 
 function buildCommand(): Command {
@@ -61,6 +63,7 @@ function buildCommand(): Command {
     .option(`-to, --${optionNames.oneOf}`, 'Add the oneOf property to the specs where needed')
     .option(`-tp, --${optionNames.postman}`, 'Transform the specs to Postman collection format')
     .option(`-te, --${optionNames.endpoint} [value]`, 'Prepend endpoints with the specified product key, or the pathname from the first server url if none is specified.')
+    .option(`--${optionNames.operationIdsToTags}`, 'Use operation IDs for tags' )
     .parse(process.argv);
 
   return program;
@@ -78,6 +81,7 @@ class TransformerExecutor {
     this.command = command;
 
     const tags = command.getOptionValue(optionNames.tags);
+    const operationIdsToTags = command.getOptionValue(optionNames.operationIdsToTags);
     const headers = command.getOptionValue(optionNames.headers);
     const oneOf = command.getOptionValue(optionNames.oneOf);
     const postman = command.getOptionValue(optionNames.postman);
@@ -89,6 +93,10 @@ class TransformerExecutor {
 
     if (tags) {
       this.transformers.push(new TagsSettingTransformer(tags));
+    }
+
+    if (operationIdsToTags) {
+      this.transformers.push(new OperationIdsToTagsTransformer())
     }
 
     if (headers) {

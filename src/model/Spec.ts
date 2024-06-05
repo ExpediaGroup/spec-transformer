@@ -80,15 +80,33 @@ export default class Spec {
         ...map(this.specs.paths, (path, operations) => [
           path,
           map(operations, (operation, operationFields) => [
-            operation,
-            map(operationFields, (operationField, operationFieldValue) => [
-              operationField,
-              operationField === TAGS ? tags : operationFieldValue
-            ])
+            operation, {
+              ...operationFields,
+              tags: operationFields.tags ? tags : operationFields.tags
+            }
           ])
         ])
       }
     });
+  }
+
+  withOperationIdsAsTags(): Spec {
+    if (!this.specs.paths) return new Spec(this.specs);
+    return new Spec({
+      ...this.specs,
+      paths: {
+        ...map(this.specs.paths, (path, operations) => [
+          path,
+          map(operations, (operation, operationFields) => [
+              operation, {
+                ...operationFields,
+                tags: operationFields.tags && operationFields.operationId ? [operationFields.operationId] : operationFields.tags
+              }
+          ])
+        ])
+      }
+    });
+
   }
 
   /**

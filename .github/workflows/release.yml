@@ -45,4 +45,4 @@ jobs:
           GIT_COMMITTER_EMAIL: oss@expediagroup.com
         run: |
           cd dist
-          npx semantic-release --branches main --debug
+          npx semantic-release --debug

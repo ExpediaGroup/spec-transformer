@@ -38,8 +38,11 @@ export class PostmanTransformer implements Transformer {
 
     let result: Record<Key, Value> = {};
     converter.convert(input, options, (err: unknown, conversionResult: Record<Key, Value>) => {
-        if (err || !conversionResult.result) {
-          console.warn('Error transforming to Postman collection', { error: err, reason: conversionResult.reason });
+        if (err || !conversionResult || !conversionResult.result) {
+          console.warn('Error transforming to Postman collection', {
+            error: err,
+            reason: conversionResult?.reason ?? 'No conversion result'
+          });
           return;
         }
         result = conversionResult.output[0].data;

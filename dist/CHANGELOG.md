@@ -8,5 +8,6 @@
 
 ### Bug Fixes
 
+* debug semantic release ([#271](https://github.com/ExpediaGroup/spec-transformer/issues/271)) ([e885639](https://github.com/ExpediaGroup/spec-transformer/commit/e88563957a26476aaf3d729412bef8ac490c7617))
 * **deps:** update dependencies openapi3-ts from v4.3.1 to v4.3.2 ([#257](https://github.com/ExpediaGroup/spec-transformer/issues/257)) ([a0d1186](https://github.com/ExpediaGroup/spec-transformer/commit/a0d11869ea508f5b71319d7311e9f7188b2cf9cc))
 * update tests to work with latest version of postman collections generator ([2c11482](https://github.com/ExpediaGroup/spec-transformer/commit/2c11482897e09cc9ae834a1807163609f508137d))

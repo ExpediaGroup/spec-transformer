@@ -74,9 +74,18 @@ describe('test PostmanTransformer', () => {
     expect(postmanCollection).toEqual({});
   });
 
-  it('should return an empty record for invalid input', () => {
+  it('should return an empty record for invalid input and no semantic version number of the OAS specification', () => {
     const transformer = new PostmanTransformer();
     const postmanCollection = transformer.transform({ test: 'test' });
+    expect(postmanCollection).toEqual({});
+  });
+
+  it('should return an empty record for a spec with basic metadata', () => {
+    const transformer = new PostmanTransformer();
+    const postmanCollection = transformer.transform({
+      openapi: '3.1.0',
+      info: { title: 'Example API', version: '1.0.0' }
+    });
     expect(postmanCollection).toEqual({});
   });
 });

@@ -31,7 +31,7 @@ jobs:
 
       - name: Build
         run: |
-          npm semantic-release --dry-run
+          npx semantic-release --dry-run
           npm run build && cd dist && ls -la
 
       - name: Release

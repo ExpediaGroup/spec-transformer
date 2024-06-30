@@ -88,4 +88,14 @@ describe('test PostmanTransformer', () => {
     });
     expect(postmanCollection).toEqual({});
   });
+
+  it('should return a valid postman collection for a spec with basic metadata and no paths', () => {
+    const transformer = new PostmanTransformer();
+    const postmanCollection = transformer.transform({
+      openapi: '3.1.0',
+      info: { title: 'Example API', version: '1.0.0' },
+      paths: {}
+    });
+    expect(postmanCollection.info.name).toEqual('Example API');
+  });
 });

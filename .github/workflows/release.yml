@@ -43,6 +43,5 @@ jobs:
           GIT_COMMITTER_EMAIL: oss@expediagroup.com
         run: |
           cd dist
-          DEBUG=* npx semantic-release
-          npx semantic-release --debug --dry-run
+          npx semantic-release
 

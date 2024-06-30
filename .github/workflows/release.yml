@@ -30,9 +30,7 @@ jobs:
           CI: true
 
       - name: Build
-        run: |
-          npx semantic-release --dry-run
-          npm run build && cd dist && ls -la
+        run: npm run build && cd dist && ls -la
 
       - name: Release
         env:

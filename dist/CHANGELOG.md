@@ -1,5 +1,5 @@
-## [1.11.1](https://github.com/ExpediaGroup/spec-transformer/compare/v1.11.0...v1.11.1) (2024-08-06)
+## [1.12.0](https://github.com/ExpediaGroup/spec-transformer/compare/v1.11.1...v1.12.0) (2024-08-06)
 
-### Bug Fixes
+### Features
 
-* **deps:** downgrade semantic release github plugin ([#291](https://github.com/ExpediaGroup/spec-transformer/issues/291)) ([9acc3ec](https://github.com/ExpediaGroup/spec-transformer/commit/9acc3eccb60bf185699e79a3d543fe00a53cce04))
+* **deps:** update dependencies openapi-to-postmanv2 from v4.22.0 to v4.23.1 ([#288](https://github.com/ExpediaGroup/spec-transformer/issues/288)) ([16456b8](https://github.com/ExpediaGroup/spec-transformer/commit/16456b80ba484dd4182d895f0d3a679a67e611f6))

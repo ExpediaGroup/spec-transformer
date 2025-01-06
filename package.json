@@ -37,7 +37,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "commander": "12.1.0",
+    "commander": "13.0.0",
     "js-yaml": "4.1.0",
     "openapi-to-postmanv2": "4.24.0",
     "openapi3-ts": "4.4.0"

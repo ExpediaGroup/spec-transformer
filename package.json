@@ -40,7 +40,8 @@
     "commander": "13.1.0",
     "js-yaml": "4.1.0",
     "openapi-to-postmanv2": "5.0.0",
-    "openapi3-ts": "4.4.0"
+    "openapi3-ts": "4.4.0",
+    "yaml": "2.7.1"
   },
   "devDependencies": {
     "@semantic-release/changelog": "6.0.3",

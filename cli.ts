@@ -32,9 +32,10 @@ import { JsonReader } from './src/io/reader/JsonReader';
 import { JsonWriter } from './src/io/writer/JsonWriter';
 import { YamlWriter } from './src/io/writer/YamlWriter';
 
-import { Command } from 'commander';
+import { Command, Option } from 'commander';
 import * as fs from 'fs';
 import { version } from './package.json';
+import { Scalar } from 'yaml';
 
 const appName = 'Spec Transformer';
 const optionNames = {
@@ -47,24 +48,34 @@ const optionNames = {
   oneOf: 'oneOf',
   postman: 'postman',
   endpoint: 'endpoint',
-  operationIdsToTags: 'operationIdsToTags'
+  operationIdsToTags: 'operationIdsToTags',
+  defaultStringType: 'defaultStringType'
 };
 
 function buildCommand(): Command {
   const program = new Command();
   program.version(version)
     .description(`${appName} CLI`)
-    .option(`-i, --${optionNames.input} [value]`, 'Input file path')
-    .option(`-if, --${optionNames.inputFormat} [value]`, 'Input file format. Supported formats: json, yaml. Default: yaml')
-    .option(`-o, --${optionNames.output} [value]`, 'Output file path')
-    .option(`-of, --${optionNames.outputFormat} [value]`, 'Output file format. Supported formats: json, yaml. Default: yaml unless Postman transformation is applied, then json')
-    .option(`-tt, --${optionNames.tags} [value]`, 'Update the specs tags')
-    .option(`-th, --${optionNames.headers} [value]`, 'Remove the specified headers from the specs, or the common ones if none are specified')
-    .option(`-to, --${optionNames.oneOf}`, 'Add the oneOf property to the specs where needed')
-    .option(`-tp, --${optionNames.postman}`, 'Transform the specs to Postman collection format')
-    .option(`-te, --${optionNames.endpoint} [value]`, 'Prepend endpoints with the specified product key, or the pathname from the first server url if none is specified.')
+    .option(`--${optionNames.input} [value]`, 'Input file path')
+    .option(`--${optionNames.inputFormat} [value]`, 'Input file format. Supported formats: json, yaml. Default: yaml')
+    .option(`--${optionNames.output} [value]`, 'Output file path')
+    .option(`--${optionNames.outputFormat} [value]`, 'Output file format. Supported formats: json, yaml. Default: yaml unless Postman transformation is applied, then json')
+    .option(`--${optionNames.tags} [value]`, 'Update the specs tags')
+    .option(`--${optionNames.headers} [value]`, 'Remove the specified headers from the specs, or the common ones if none are specified')
+    .option(`--${optionNames.oneOf}`, 'Add the oneOf property to the specs where needed')
+    .option(`--${optionNames.postman}`, 'Transform the specs to Postman collection format')
+    .option(`--${optionNames.endpoint} [value]`, 'Prepend endpoints with the specified product key, or the pathname from the first server url if none is specified.')
     .option(`--${optionNames.operationIdsToTags}`, 'Use operation IDs for tags' )
-    .parse(process.argv);
+
+    program.addOption(
+      new Option(
+        `--${optionNames.defaultStringType} [value]`,
+        'The default type of string literal used to stringify values'
+      ).choices(['PLAIN', 'QUOTE_SINGLE'])
+      .default('PLAIN')
+    );
+
+    program.parse(process.argv);
 
   return program;
 }
@@ -90,6 +101,7 @@ class TransformerExecutor {
     const output = command.getOptionValue(optionNames.output);
     const outputFormat = command.getOptionValue(optionNames.outputFormat);
     const endpoint = command.getOptionValue(optionNames.endpoint);
+    const defaultStringType = command.getOptionValue(optionNames.defaultStringType);
 
     if (tags) {
       this.transformers.push(new TagsSettingTransformer(tags));
@@ -127,12 +139,11 @@ class TransformerExecutor {
 
     this.reader = inputFormat?.toLowerCase() === 'json' ? new JsonReader() : new YamlReader();
 
-
     if (isTransformerUsed(command, optionNames.postman) && outputFormat?.toLowerCase() !== 'json') {
       console.warn(`>> ${appName}: Postman collection import is only supported from JSON files. Defaulting to JSON Writer`);
       this.writer = new JsonWriter();
     } else {
-      this.writer = outputFormat?.toLowerCase() === 'json' ? new JsonWriter() : new YamlWriter();
+      this.writer = outputFormat?.toLowerCase() === 'json' ? new JsonWriter() : new YamlWriter({defaultStringType: defaultStringType});
     }
   }
 

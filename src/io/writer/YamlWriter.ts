@@ -17,12 +17,25 @@
 import Writer from './Writer';
 import { Key, Value } from '../../model/Types';
 import { stringify } from 'yaml';
+import type { Scalar } from 'yaml';
 
 /**
  * A writer implementation for writing the specs in YAML format.
  */
 export class YamlWriter implements Writer {
+  defaultStringType: Scalar.Type;
+
+  constructor(props: { defaultStringType: Scalar.Type } = {
+    defaultStringType: 'PLAIN'
+  }) {
+    this.defaultStringType = props.defaultStringType;
+  }
+
   write(specs: Record<Key, Value>): string {
-    return stringify(specs, { aliasDuplicateObjects: false });
+    return stringify(specs, {
+      aliasDuplicateObjects: false,
+      defaultStringType: this.defaultStringType,
+      defaultKeyType: 'PLAIN'
+    });
   }
 }

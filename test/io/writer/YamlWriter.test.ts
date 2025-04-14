@@ -17,32 +17,30 @@
 import { YamlWriter } from '../../../index';
 
 describe('test YamlWriter', () => {
-  it('should return the specs as yaml string', () => {
-    const specsRecord = {
-      openapi: '3.0.0',
-      info: {
-        title: 'Pet Store API',
-        version: '1.0.0',
-      },
-      paths: {
-        '/pets': {
-          get: {
-            summary: 'List all pets',
-            responses: {
-              '200': {
-                content: {
-                  'application/json': {
-                    schema: {
-                      type: 'array',
-                      items: {
-                        type: 'object',
-                        properties: {
-                          id: {
-                            type: 'string',
-                          },
-                          name: {
-                            type: 'string',
-                          },
+  const specsRecord = {
+    openapi: '3.0.0',
+    info: {
+      title: 'Pet Store API',
+      version: '1.0.0',
+    },
+    paths: {
+      '/pets': {
+        get: {
+          summary: 'List all pets',
+          responses: {
+            '200': {
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'array',
+                    items: {
+                      type: 'object',
+                      properties: {
+                        id: {
+                          type: 'string',
+                        },
+                        name: {
+                          type: 'string',
                         },
                       },
                     },
@@ -53,8 +51,9 @@ describe('test YamlWriter', () => {
           },
         },
       },
-    };
-
+    },
+  };
+  it('should return the specs as yaml string', () => {
     const specsYaml =
       'openapi: 3.0.0' +
       '\ninfo:' +
@@ -81,6 +80,34 @@ describe('test YamlWriter', () => {
 
     expect(new YamlWriter().write(specsRecord)).toEqual(specsYaml);
   });
+
+  it('should wrap string values with quotes if defaultStringType is QUOTE_SINGLE', () => {
+    const specsYaml =
+      'openapi: \'3.0.0\'' +
+      '\ninfo:' +
+      '\n  title: \'Pet Store API\'' +
+      '\n  version: \'1.0.0\'' +
+      '\npaths:' +
+      '\n  /pets:' +
+      '\n    get:' +
+      '\n      summary: \'List all pets\'' +
+      '\n      responses:' +
+      '\n        "200":' +
+      '\n          content:' +
+      '\n            application/json:' +
+      '\n              schema:' +
+      '\n                type: \'array\'' +
+      '\n                items:' +
+      '\n                  type: \'object\'' +
+      '\n                  properties:' +
+      '\n                    id:' +
+      '\n                      type: \'string\'' +
+      '\n                    name:' +
+      '\n                      type: \'string\'' +
+      '\n';
+
+    expect(new YamlWriter({defaultStringType: 'QUOTE_SINGLE'}).write(specsRecord)).toEqual(specsYaml);
+  })
 
   it('should return empty string if specs is undefined', () => {
     expect(new YamlWriter().write({})).toEqual('{}\n');

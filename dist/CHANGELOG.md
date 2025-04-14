@@ -1,4 +1,4 @@
-## [1.12.0](https://github.com/ExpediaGroup/spec-transformer/compare/v1.11.1...v1.12.0) (2025-04-08)
+## [1.12.0](https://github.com/ExpediaGroup/spec-transformer/compare/v1.11.1...v1.12.0) (2025-04-14)
 
 ### Features
 

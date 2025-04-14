@@ -1,4 +1,8 @@
-## [1.12.0](https://github.com/ExpediaGroup/spec-transformer/compare/v1.11.1...v1.12.0) (2025-04-14)
+## [2.0.0](https://github.com/ExpediaGroup/spec-transformer/compare/v1.11.1...v2.0.0) (2025-04-14)
+
+### ⚠ BREAKING CHANGES
+
+* remove multiple-character-after-single-dash options (#345)
 
 ### Features
 
@@ -10,3 +14,7 @@
 * **deps:** update dependencies openapi-to-postmanv2 from v4.24.0 to v4.25.0 ([#329](https://github.com/ExpediaGroup/spec-transformer/issues/329)) ([82344b2](https://github.com/ExpediaGroup/spec-transformer/commit/82344b29bde376a2fae1da5b9d9d03e2a221acb1))
 * **deps:** update dependencies openapi-to-postmanv2 from v4.25.0 to v5 ([#339](https://github.com/ExpediaGroup/spec-transformer/issues/339)) ([77babf8](https://github.com/ExpediaGroup/spec-transformer/commit/77babf8c17f5830cac553b04a3c629f3674d6904))
 * **deps:** update dependencies openapi3-ts from v4.3.3 to v4.4.0 ([#301](https://github.com/ExpediaGroup/spec-transformer/issues/301)) ([7f535e0](https://github.com/ExpediaGroup/spec-transformer/commit/7f535e0ad21de09ae54904763a8ff61270e56a9a))
+
+### Bug Fixes
+
+* remove multiple-character-after-single-dash options ([#345](https://github.com/ExpediaGroup/spec-transformer/issues/345)) ([3d4f712](https://github.com/ExpediaGroup/spec-transformer/commit/3d4f7126987decdf8a845c9401640b7647718287))

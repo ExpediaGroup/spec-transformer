@@ -25,29 +25,28 @@ import { Input, Options } from 'openapi-to-postmanv2';
  */
 export class PostmanTransformer implements Transformer {
   transform(specs: Record<Key, Value>): Record<Key, Value> {
-
     // @ts-ignore
     const input: Input = { type: 'json', data: specs };
 
     const options: Options = {
       folderStrategy: 'Tags',
-      requestParametersResolution: 'Example',
+      requestParametersResolution: 'Schema',
+      exampleParametersResolution: 'Example',
       optimizeConversion: false,
-      stackLimit: 50
+      stackLimit: 50,
     };
 
     let result: Record<Key, Value> = {};
     converter.convert(input, options, (err: unknown, conversionResult: Record<Key, Value>) => {
-        if (err || !conversionResult || !conversionResult.result) {
-          console.warn('Error transforming to Postman collection', {
-            error: err,
-            reason: conversionResult?.reason ?? 'No conversion result'
-          });
-          return;
-        }
-        result = conversionResult.output[0].data;
+      if (err || !conversionResult || !conversionResult.result) {
+        console.warn('Error transforming to Postman collection', {
+          error: err,
+          reason: conversionResult?.reason ?? 'No conversion result',
+        });
+        return;
       }
-    );
+      result = conversionResult.output[0].data;
+    });
 
     return result;
   }

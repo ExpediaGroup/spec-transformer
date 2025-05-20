@@ -31,7 +31,7 @@ export class PostmanTransformer implements Transformer {
 
     const options: Options = {
       folderStrategy: 'Tags',
-      requestParametersResolution: 'Schema',
+      requestParametersResolution: 'Example',
       exampleParametersResolution: 'Example',
       optimizeConversion: false,
       stackLimit: 50,

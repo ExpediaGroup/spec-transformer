@@ -21,7 +21,8 @@ import * as converter from 'openapi-to-postmanv2';
 import { Input, Options } from 'openapi-to-postmanv2';
 
 /**
- * A transformer implementation for transforming the specs in OpenAPI format to Postman format.
+ * PostmanTransformer class implements the Transformer interface to convert
+ * OpenAPI specifications into Postman collections using the `openapi-to-postmanv2` library.
  */
 export class PostmanTransformer implements Transformer {
   transform(specs: Record<Key, Value>): Record<Key, Value> {

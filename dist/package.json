@@ -1,6 +1,6 @@
 {
   "name": "@expediagroup/spec-transformer",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "API Spec Transformer",
   "repository": {
     "type": "git",
@@ -40,7 +40,7 @@
     "commander": "14.0.0",
     "js-yaml": "4.1.0",
     "openapi-to-postmanv2": "5.1.0",
-    "openapi3-ts": "4.4.0",
+    "openapi3-ts": "4.5.0",
     "yaml": "2.8.0"
   },
   "devDependencies": {
@@ -48,17 +48,17 @@
     "@semantic-release/commit-analyzer": "13.0.1",
     "@semantic-release/exec": "7.1.0",
     "@semantic-release/git": "10.0.1",
-    "@semantic-release/github": "11.0.3",
-    "@semantic-release/npm": "12.0.1",
-    "@semantic-release/release-notes-generator": "14.0.3",
+    "@semantic-release/github": "11.0.6",
+    "@semantic-release/npm": "12.0.2",
+    "@semantic-release/release-notes-generator": "14.1.0",
     "@types/jest": "30.0.0",
     "@types/js-yaml": "4.0.9",
-    "@types/node": "22.16.0",
+    "@types/node": "22.18.6",
     "@types/openapi-to-postmanv2": "5.0.0",
-    "conventional-changelog-conventionalcommits": "9.0.0",
+    "conventional-changelog-conventionalcommits": "9.1.0",
     "jest": "30.0.4",
     "prettier": "3.6.2",
-    "semantic-release": "24.2.5",
+    "semantic-release": "24.2.8",
     "ts-jest": "29.4.0",
     "ts-node": "10.9.2",
     "typescript": "5.8.3"

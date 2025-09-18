@@ -1,5 +1,5 @@
-## [2.2.4](https://github.com/ExpediaGroup/spec-transformer/compare/v2.2.3...v2.2.4) (2025-05-20)
+## [2.3.0](https://github.com/ExpediaGroup/spec-transformer/compare/v2.2.4...v2.3.0) (2025-09-18)
 
-### Bug Fixes
+### Features
 
-* **transformer:** change requestParametersResolution to 'Example' for better handling ([6899fa6](https://github.com/ExpediaGroup/spec-transformer/commit/6899fa6d24df9f91e1dbd883fd778bfa97570ca1))
+* **deps:** update dependencies openapi-to-postmanv2 from v5.0.0 to v5.1.0 ([#358](https://github.com/ExpediaGroup/spec-transformer/issues/358)) ([9b6116c](https://github.com/ExpediaGroup/spec-transformer/commit/9b6116c91956f16256b311b1b321bfede636339c))

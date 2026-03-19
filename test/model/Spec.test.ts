@@ -337,6 +337,69 @@ describe('test Spec - Basic Tests', () => {
             },
             trace: {}
           }
+        },
+        components: {
+          parameters: {
+            Header2Parameter: {
+              name: 'header2',
+              in: 'header'
+            },
+            QueryParameter: {
+              name: 'param1',
+              in: 'query'
+            },
+            EmptyParameter: {}
+          },
+          schemas: {
+            MySchema: {
+              type: 'object',
+              properties: {
+                property1: {
+                  type: 'string'
+                }
+              }
+            }
+          }
+        }
+      });
+    });
+
+    it('should remove $ref header parameters from arrays', () => {
+      const specs = {
+        openapi: '3.0.0',
+        info: {
+          title: 'Example API',
+          version: '1.0.0'
+        },
+        paths: {
+          '/test': {
+            get: {
+              parameters: [
+                { $ref: '#/components/parameters/HeaderParam' },
+                { in: 'query', name: 'limit', schema: { type: 'integer' } }
+              ]
+            }
+          }
+        },
+        components: {
+          parameters: {
+            HeaderParam: { in: 'header', name: 'x-trace-id', schema: { type: 'string' } }
+          }
+        }
+      };
+      expect(new Spec(specs).filterHeaders(['x-trace-id']).records()).toEqual({
+        ...specs,
+        paths: {
+          '/test': {
+            get: {
+              parameters: [
+                { in: 'query', name: 'limit', schema: { type: 'integer' } }
+              ]
+            }
+          }
+        },
+        components: {
+          parameters: {}
         }
       });
     });

@@ -184,3 +184,159 @@ describe('test HeaderRemovalTransformer', () => {
     });
   });
 });
+
+describe('test HeaderRemovalTransformer with $ref in parameters arrays', () => {
+  const refInArraySpecs = {
+    openapi: '3.0.0',
+    info: { title: 'Test API', version: '1.0.0' },
+    paths: {
+      '/test': {
+        get: {
+          parameters: [
+            { $ref: '#/components/parameters/AcceptHeader' },
+            { $ref: '#/components/parameters/TraceIdHeader' },
+            { $ref: '#/components/parameters/QueryParam' },
+            { in: 'header', name: 'x-custom', schema: { type: 'string' } },
+            { in: 'query', name: 'limit', schema: { type: 'integer' } },
+          ]
+        }
+      }
+    },
+    components: {
+      parameters: {
+        AcceptHeader: { in: 'header', name: 'accept', schema: { type: 'string' } },
+        TraceIdHeader: { in: 'header', name: 'x-trace-id', schema: { type: 'string' } },
+        QueryParam: { in: 'query', name: 'page', schema: { type: 'integer' } },
+      },
+      schemas: { SomeSchema: { type: 'object' } }
+    }
+  };
+
+  it('should remove $ref to header in removal list from array', () => {
+    const transformer = new HeaderRemovalTransformer(['accept']);
+    const result = transformer.transform(refInArraySpecs);
+    expect(result.paths['/test'].get.parameters).not.toContainEqual(
+      { $ref: '#/components/parameters/AcceptHeader' }
+    );
+  });
+
+  it('should keep $ref to header NOT in removal list', () => {
+    const transformer = new HeaderRemovalTransformer(['accept']);
+    const result = transformer.transform(refInArraySpecs);
+    expect(result.paths['/test'].get.parameters).toContainEqual(
+      { $ref: '#/components/parameters/TraceIdHeader' }
+    );
+  });
+
+  it('should keep $ref to non-header (query) param', () => {
+    const transformer = new HeaderRemovalTransformer(['accept', 'x-trace-id']);
+    const result = transformer.transform(refInArraySpecs);
+    expect(result.paths['/test'].get.parameters).toContainEqual(
+      { $ref: '#/components/parameters/QueryParam' }
+    );
+  });
+
+  it('should filter mixed array of inline and $ref parameters correctly', () => {
+    const transformer = new HeaderRemovalTransformer(['accept', 'x-custom']);
+    const result = transformer.transform(refInArraySpecs);
+    expect(result.paths['/test'].get.parameters).toEqual([
+      { $ref: '#/components/parameters/TraceIdHeader' },
+      { $ref: '#/components/parameters/QueryParam' },
+      { in: 'query', name: 'limit', schema: { type: 'integer' } },
+    ]);
+  });
+
+  it('should match resolved $ref headers case-insensitively', () => {
+    const specsWithCaps = {
+      ...refInArraySpecs,
+      components: {
+        ...refInArraySpecs.components,
+        parameters: {
+          ...refInArraySpecs.components.parameters,
+          TraceIdHeader: { in: 'header', name: 'X-Trace-Id', schema: { type: 'string' } },
+        }
+      }
+    };
+    const transformer = new HeaderRemovalTransformer(['x-trace-id']);
+    const result = transformer.transform(specsWithCaps);
+    expect(result.paths['/test'].get.parameters).not.toContainEqual(
+      { $ref: '#/components/parameters/TraceIdHeader' }
+    );
+  });
+
+  it('should remove matching headers from components/parameters', () => {
+    const transformer = new HeaderRemovalTransformer(['accept', 'x-trace-id']);
+    const result = transformer.transform(refInArraySpecs);
+    expect(result.components.parameters).toEqual({
+      QueryParam: { in: 'query', name: 'page', schema: { type: 'integer' } },
+    });
+  });
+
+  it('should preserve non-header components and schemas', () => {
+    const transformer = new HeaderRemovalTransformer(['accept', 'x-trace-id']);
+    const result = transformer.transform(refInArraySpecs);
+    expect(result.components.parameters.QueryParam).toBeDefined();
+    expect(result.components.schemas).toEqual({ SomeSchema: { type: 'object' } });
+  });
+
+  it('should not crash when spec has no components/parameters', () => {
+    const specsNoParams = {
+      openapi: '3.0.0',
+      info: { title: 'Test API', version: '1.0.0' },
+      paths: {
+        '/test': {
+          get: {
+            parameters: [
+              { in: 'header', name: 'accept', schema: { type: 'string' } },
+            ]
+          }
+        }
+      }
+    };
+    const transformer = new HeaderRemovalTransformer(['accept']);
+    const result = transformer.transform(specsNoParams);
+    expect(result.paths['/test'].get.parameters).toEqual([]);
+  });
+
+  it('should produce empty array when all params are removed', () => {
+    const specsAllHeaders = {
+      ...refInArraySpecs,
+      paths: {
+        '/test': {
+          get: {
+            parameters: [
+              { $ref: '#/components/parameters/AcceptHeader' },
+              { in: 'header', name: 'x-trace-id', schema: { type: 'string' } },
+            ]
+          }
+        }
+      }
+    };
+    const transformer = new HeaderRemovalTransformer(['accept', 'x-trace-id']);
+    const result = transformer.transform(specsAllHeaders);
+    expect(result.paths['/test'].get.parameters).toEqual([]);
+  });
+
+  it('should keep unresolvable $ref entries as-is', () => {
+    const specsWithBadRefs = {
+      ...refInArraySpecs,
+      paths: {
+        '/test': {
+          get: {
+            parameters: [
+              { $ref: '#/components/parameters/NonExistent' },
+              { $ref: 'malformed-ref' },
+              { in: 'header', name: 'accept', schema: { type: 'string' } },
+            ]
+          }
+        }
+      }
+    };
+    const transformer = new HeaderRemovalTransformer(['accept']);
+    const result = transformer.transform(specsWithBadRefs);
+    expect(result.paths['/test'].get.parameters).toEqual([
+      { $ref: '#/components/parameters/NonExistent' },
+      { $ref: 'malformed-ref' },
+    ]);
+  });
+});

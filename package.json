@@ -9,8 +9,7 @@
   "main": "index.js",
   "types": "index.d.ts",
   "bin": {
-    "lib": "index.js",
-    "cli": "cli.js"
+    "spec-transformer": "cli.js"
   },
   "scripts": {
     "add-headers": "scripts/add-headers.sh",

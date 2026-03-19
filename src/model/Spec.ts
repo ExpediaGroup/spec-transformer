@@ -116,23 +116,33 @@ export default class Spec {
   filterHeaders(headersToRemove: string[]): Spec {
     if (!this.specs.paths) return new Spec(this.specs);
 
-    return new Spec({
-      ...this.specs,
-      paths: {
-        ...map(this.specs.paths, (path, operations) => [
-          path,
-          map(operations, (operation, operationFields) => [
-            operation,
-            map(operationFields, (operationField, operationFieldValue) => [
-              operationField,
-              operationField === PARAMETERS
-                ? this.filterHeaderValues(operationField, operationFieldValue, headersToRemove)
-                : operationFieldValue
-            ])
+    const filteredPaths = {
+      ...map(this.specs.paths, (path, operations) => [
+        path,
+        map(operations, (operation, operationFields) => [
+          operation,
+          map(operationFields, (operationField, operationFieldValue) => [
+            operationField,
+            operationField === PARAMETERS
+              ? this.filterHeaderValues(operationField, operationFieldValue, headersToRemove)
+              : operationFieldValue
           ])
         ])
-      }
-    });
+      ])
+    };
+
+    const result: Record<Key, Value> = { ...this.specs, paths: filteredPaths };
+
+    if (this.specs.components?.parameters) {
+      result.components = {
+        ...this.specs.components,
+        parameters: filter(this.specs.components.parameters, (_key: Key, param: Value) =>
+          param.in !== HEADER || !this.includesIgnoreCase(headersToRemove, param.name)
+        )
+      };
+    }
+
+    return new Spec(result);
   }
 
   withOneOf = (): Spec => {
@@ -350,16 +360,23 @@ export default class Spec {
   private containsItems = (value: Value): boolean => value && value.hasOwnProperty('items');
 
   private filterHeaderParameters = (parameters: Value, headersToRemove: string[]) => {
-    return parameters.filter(
-      (parameter: Record<Key, Value>) => parameter.in !== HEADER || !this.includesIgnoreCase(headersToRemove, parameter.name)
-    );
+    return parameters.filter((parameter: Record<Key, Value>) => {
+      const resolved = this.isRef(parameter) ? this.resolveParameterRef(parameter) : parameter;
+      if (!resolved) return true;
+      return resolved.in !== HEADER || !this.includesIgnoreCase(headersToRemove, resolved.name);
+    });
   };
 
   /* istanbul ignore next */
   private filterHeaderComponents = (component: Value, headersToRemove: string[]) => {
-    const parts = component['$ref'].match(/#\/components\/(.*)\/(.*)/);
-    const parameter = this.specs.components[parts?.[1]][parts?.[2]] ?? {};
+    const parameter = this.resolveParameterRef(component) ?? {};
     return parameter?.in === HEADER && this.includesIgnoreCase(headersToRemove, parameter.name) ? {} : component;
+  };
+
+  private resolveParameterRef = (ref: Value): Value | undefined => {
+    const parts = ref['$ref']?.match(/#\/components\/(.*)\/(.*)/);
+    if (!parts) return undefined;
+    return this.specs.components?.[parts[1]]?.[parts[2]];
   };
 
   private mapTags = (tags: string[]): TagObject[] => tags.map((tag) => ({ name: tag }));

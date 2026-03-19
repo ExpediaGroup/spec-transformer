@@ -50,7 +50,7 @@
     "@semantic-release/release-notes-generator": "14.1.0",
     "@types/jest": "30.0.0",
     "@types/js-yaml": "4.0.9",
-    "@types/node": "22.18.6",
+    "@types/node": "22.19.15",
     "@types/openapi-to-postmanv2": "5.0.0",
     "conventional-changelog-conventionalcommits": "9.3.0",
     "jest": "30.3.0",

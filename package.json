@@ -39,7 +39,7 @@
   "dependencies": {
     "commander": "14.0.3",
     "js-yaml": "4.1.1",
-    "openapi-to-postmanv2": "5.1.0",
+    "openapi-to-postmanv2": "5.8.0",
     "openapi3-ts": "4.5.0",
     "yaml": "2.8.2"
   },
@@ -59,7 +59,7 @@
     "jest": "30.3.0",
     "prettier": "3.6.2",
     "semantic-release": "24.2.9",
-    "ts-jest": "29.4.0",
+    "ts-jest": "29.4.6",
     "ts-node": "10.9.2",
     "typescript": "5.8.3"
   },

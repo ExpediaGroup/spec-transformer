@@ -37,6 +37,9 @@ jobs:
       - name: Build
         run: npm run build && cd dist && ls -la
 
+      - name: Configure npm for trusted publishing
+        run: echo "//registry.npmjs.org/:_authToken=\${NODE_AUTH_TOKEN}" > dist/.npmrc
+
       - name: Release
         env:
           GH_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}

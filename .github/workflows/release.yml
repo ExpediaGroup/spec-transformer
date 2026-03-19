@@ -22,9 +22,10 @@ jobs:
           persist-credentials: false
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: "latest"
+          registry-url: https://registry.npmjs.org/
 
       - name: Install dependencies
         run: npm install
@@ -38,15 +39,6 @@ jobs:
         run: npm run build && cd dist && ls -la
 
       - name: Release
-        uses: cycjimmy/semantic-release-action@v6
-        with:
-          working_directory: dist
-          extra_plugins: |
-            @semantic-release/npm@12
-            @semantic-release/changelog@6
-            @semantic-release/git@10
-            @semantic-release/exec@7
-            conventional-changelog-conventionalcommits@9
         env:
           GH_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
@@ -54,3 +46,6 @@ jobs:
           GIT_AUTHOR_EMAIL: oss@expediagroup.com
           GIT_COMMITTER_NAME: eg-oss-ci
           GIT_COMMITTER_EMAIL: oss@expediagroup.com
+        run: |
+          cd dist
+          npx semantic-release --debug

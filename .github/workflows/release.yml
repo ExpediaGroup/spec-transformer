@@ -37,10 +37,15 @@ jobs:
       - name: Build
         run: npm run build && cd dist && ls -la
 
-      - name: Configure npm for trusted publishing
-        run: echo "//registry.npmjs.org/:_authToken=\${NODE_AUTH_TOKEN}" > dist/.npmrc
-
       - name: Release
+        uses: cycjimmy/semantic-release-action@v6
+        with:
+          working_directory: dist
+          extra_plugins: |
+            @semantic-release/changelog@6
+            @semantic-release/git@10
+            @semantic-release/exec@7
+            conventional-changelog-conventionalcommits@9
         env:
           GH_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
@@ -48,6 +53,3 @@ jobs:
           GIT_AUTHOR_EMAIL: oss@expediagroup.com
           GIT_COMMITTER_NAME: eg-oss-ci
           GIT_COMMITTER_EMAIL: oss@expediagroup.com
-        run: |
-          cd dist
-          npx semantic-release --debug

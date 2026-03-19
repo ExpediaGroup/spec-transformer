@@ -1,5 +1,5 @@
-## [2.4.2](https://github.com/ExpediaGroup/spec-transformer/compare/v2.4.1...v2.4.2) (2026-03-19)
+## [2.4.3](https://github.com/ExpediaGroup/spec-transformer/compare/v2.4.2...v2.4.3) (2026-03-19)
 
 ### Bug Fixes
 
-* **release:** add @semantic-release/npm@12 for OIDC provenance support ([#388](https://github.com/ExpediaGroup/spec-transformer/issues/388)) ([7265ba3](https://github.com/ExpediaGroup/spec-transformer/commit/7265ba3e5e59f7b68afd96c04144500095f32cea))
+* **release:** use direct npm publish with OIDC instead of @semantic-release/npm ([#389](https://github.com/ExpediaGroup/spec-transformer/issues/389)) ([1d75064](https://github.com/ExpediaGroup/spec-transformer/commit/1d750640ba502f6fddb4bbabb5a55b65d1040468))

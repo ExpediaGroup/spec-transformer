@@ -37,14 +37,12 @@ jobs:
       - name: Build
         run: npm run build && cd dist && ls -la
 
-      - name: Configure npm for trusted publishing
-        run: echo "//registry.npmjs.org/:_authToken=\${NODE_AUTH_TOKEN}" > dist/.npmrc
-
       - name: Release
         uses: cycjimmy/semantic-release-action@v6
         with:
           working_directory: dist
           extra_plugins: |
+            @semantic-release/npm@12
             @semantic-release/changelog@6
             @semantic-release/git@10
             @semantic-release/exec@7

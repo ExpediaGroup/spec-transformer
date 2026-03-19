@@ -58,14 +58,15 @@
         "changelogFile": "CHANGELOG.md"
       }
     ],
-    ["@semantic-release/npm", { "provenance": true }],
-    "@semantic-release/github",
     [
       "@semantic-release/exec",
       {
+        "prepareCmd": "npm version ${nextRelease.version} --no-git-tag-version --allow-same-version",
+        "publishCmd": "npm publish --provenance --access public",
         "successCmd": "sh ../scripts/update-assets.sh"
       }
     ],
+    "@semantic-release/github",
     [
       "@semantic-release/git",
       {

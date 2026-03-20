@@ -4,67 +4,66 @@
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Build](https://img.shields.io/github/actions/workflow/status/ExpediaGroup/spec-transformer/release.yml?branch=main)](https://github.com/ExpediaGroup/spec-transformer/actions)
 
-Maintained by [@mohnoor94](https://github.com/mohnoor94) | [Expedia Group](https://github.com/ExpediaGroup)
+A composable pipeline for transforming OpenAPI 3.0 specifications.
 
-A composable, pluggable pipeline for transforming OpenAPI 3.0 specifications. Chain multiple transformers together to clean, reshape, and convert your API specs in a single pass - no manual editing required.
+- Strip unwanted HTTP headers before publishing API docs
+- Prepend path prefixes for API gateway routing
+- Consolidate tags for unified documentation portals
+- Auto-generate `oneOf` discriminator patterns for polymorphic schemas
+- Convert OpenAPI specs to Postman Collections
 
-- **Clean up specs for publishing** - strip unwanted HTTP headers (`Authorization`, `Content-Type`, etc.) before exposing API docs externally
-- **Route through API gateways** - prepend path prefixes to all endpoints automatically
-- **Unify documentation portals** - consolidate or replace tags across operations
-- **Fix polymorphic schemas** - auto-generate `oneOf` discriminator arrays so tools like Swagger UI render inheritance correctly
-- **Export to Postman** - convert any OpenAPI spec into a ready-to-import Postman Collection v2.1, with folder-by-tag organization and example parameters
+Available as a **CLI** and a **TypeScript library**.
 
-Available as a TypeScript library and a CLI. Zero config for common use cases - just pipe your spec through and go.
+**Quick links:** [CLI Usage](#cli-usage) | [Library Usage](#library-usage) | [Transformers](#transformers) | [Examples](#before--after-examples)
 
 ## Architecture
 
-```mermaid
-flowchart TB
-    Input["fa:fa-file-code Input\n YAML / JSON"]:::io
-    Reader["fa:fa-book-open Reader"]:::process
-    Writer["fa:fa-pen-nib Writer"]:::process
-    Output["fa:fa-file-export Output\n YAML / JSON"]:::io
-
-    Input --> Reader
-
-    subgraph chain [" TransformerChain "]
-        direction TB
-        H["fa:fa-filter HeaderRemoval"]:::transformer
-        E["fa:fa-route Endpoint"]:::transformer
-        T["fa:fa-tags Tags"]:::transformer
-        OT["fa:fa-id-card OperationIdsToTags"]:::transformer
-        O["fa:fa-sitemap OneOf"]:::transformer
-        P["fa:fa-paper-plane Postman"]:::transformer
-    end
-
-    Reader --> chain --> Writer --> Output
-    Output -.- Note["OpenAPI spec or\nPostman Collection"]:::note
-
-    classDef io fill:#e8f4f8,stroke:#2196F3,stroke-width:2px,color:#1565C0
-    classDef note fill:#fffde7,stroke:#FFC107,stroke-width:1.5px,color:#F57F17,font-style:italic
-    classDef process fill:#fff3e0,stroke:#FF9800,stroke-width:2px,color:#E65100
-    classDef transformer fill:#f3e5f5,stroke:#9C27B0,stroke-width:1.5px,color:#6A1B9A,stroke-dasharray: 4 2
-
-    style chain fill:#fafafa,stroke:#9C27B0,stroke-width:2px,stroke-dasharray: 5 5,color:#6A1B9A
-```
-
-## Transformers
-
-| Transformer | What it does |
-| --- | --- |
-| `HeaderRemovalTransformer` | Removes unwanted HTTP headers from operations and components. Resolves `$ref` references. Case-insensitive matching. |
-| `EndpointTransformer` | Prepends a path prefix to all endpoints. Auto-extracts from the first server URL if omitted. |
-| `TagsSettingTransformer` | Replaces all operation and top-level tags with a single target tag. |
-| `OperationIdsToTagsTransformer` | Uses each operation's `operationId` as its tag. |
-| `OneOfSettingTransformer` | Auto-generates `oneOf` arrays for polymorphic schema hierarchies using discriminator mappings. |
-| `PostmanTransformer` | Converts an OpenAPI spec into a Postman Collection v2.1. |
+<p align="center">
+  <img src="docs/architecture.svg" alt="Architecture: Input → Reader → TransformerChain [T1 → T2 → ... TN] → Writer → Output" width="810"/>
+</p>
 
 ## Installation
 
-Requires Node.js >= 18.
-
 ```bash
 npm install @expediagroup/spec-transformer
+```
+
+## CLI Usage
+
+```bash
+npx @expediagroup/spec-transformer --help
+```
+
+### Options
+
+| Flag | Description |
+| --- | --- |
+| `--input [path]` | Input file path |
+| `--inputFormat [value]` | Input format: `json` or `yaml` (default: `yaml`) |
+| `--output [path]` | Output file path |
+| `--outputFormat [value]` | Output format: `json` or `yaml` (default: `yaml`, or `json` when `--postman` is used) |
+| `--headers [list]` | Remove specified headers (comma-separated), or common headers if no value given |
+| `--tags [value]` | Replace all tags with the given tag |
+| `--endpoint [prefix]` | Prepend a path prefix, or auto-extract from the first server URL |
+| `--oneOf` | Generate `oneOf` arrays for polymorphic schemas |
+| `--postman` | Convert to Postman Collection format |
+| `--operationIdsToTags` | Use operation IDs as tags |
+| `--defaultStringType [value]` | YAML string quoting style: `PLAIN` (default) or `QUOTE_SINGLE` |
+
+### Examples
+
+```bash
+# Remove common headers
+npx @expediagroup/spec-transformer --input api.yaml --output clean.yaml --headers
+
+# Remove specific headers
+npx @expediagroup/spec-transformer --input api.yaml --output clean.yaml --headers "authorization,x-api-key"
+
+# Chain transformations
+npx @expediagroup/spec-transformer --input api.yaml --output out.yaml --headers --tags my-api --endpoint /v2
+
+# Convert to Postman Collection
+npx @expediagroup/spec-transformer --input api.yaml --output collection.json --postman
 ```
 
 ## Library Usage
@@ -114,8 +113,6 @@ const chain = new TransformerChain([
 const result = chain.transform(specs, new YamlReader(), new YamlWriter());
 ```
 
-> **JSON input/output:** Swap in `JsonReader` and `JsonWriter` for JSON specs - the API is identical.
-
 ### In-memory objects
 
 Use `transformRecord()` when you already have a parsed spec object:
@@ -135,6 +132,17 @@ const chain = new TransformerChain([
 
 const result = chain.transformRecord(spec);
 ```
+
+## Transformers
+
+| Transformer | What it does |
+| --- | --- |
+| `HeaderRemovalTransformer` | Removes unwanted HTTP headers from operations and components. Resolves `$ref` references. Case-insensitive matching. |
+| `EndpointTransformer` | Prepends a path prefix to all endpoints. Auto-extracts from the first server URL if omitted. |
+| `TagsSettingTransformer` | Replaces all operation and top-level tags with a single target tag. |
+| `OperationIdsToTagsTransformer` | Uses each operation's `operationId` as its tag. |
+| `OneOfSettingTransformer` | Auto-generates `oneOf` arrays for polymorphic schema hierarchies using discriminator mappings. |
+| `PostmanTransformer` | Converts an OpenAPI spec into a Postman Collection v2.1. |
 
 ## Before / After Examples
 
@@ -166,34 +174,6 @@ paths:
       parameters:
         - name: X-Request-ID
           in: header
-```
-
-### Endpoint Prefixing
-
-All paths are prepended with the given prefix:
-
-**Before:**
-
-```yaml
-paths:
-  /operation1:
-    get:
-      summary: Get operation1
-  /operation2:
-    post:
-      summary: Post operation2
-```
-
-**After** (with `new EndpointTransformer('/v2')`):
-
-```yaml
-paths:
-  /v2/operation1:
-    get:
-      summary: Get operation1
-  /v2/operation2:
-    post:
-      summary: Post operation2
 ```
 
 ### OneOf Discriminator
@@ -230,45 +210,6 @@ paths:
                 - $ref: "#/components/schemas/Credit"
 ```
 
-## CLI Usage
-
-```bash
-npx @expediagroup/spec-transformer --help
-```
-
-### Options
-
-| Flag | Description |
-| --- | --- |
-| `--version` | Show version number |
-| `--input [path]` | Input file path |
-| `--inputFormat [value]` | Input format: `json` or `yaml` (default: `yaml`) |
-| `--output [path]` | Output file path |
-| `--outputFormat [value]` | Output format: `json` or `yaml` (default: `yaml`, or `json` when `--postman` is used) |
-| `--headers [list]` | Remove specified headers (comma-separated), or common headers if no value given |
-| `--tags [value]` | Replace all tags with the given tag |
-| `--endpoint [prefix]` | Prepend a path prefix, or auto-extract from the first server URL |
-| `--oneOf` | Generate `oneOf` arrays for polymorphic schemas |
-| `--postman` | Convert to Postman Collection format |
-| `--operationIdsToTags` | Use operation IDs as tags |
-| `--defaultStringType [value]` | YAML string quoting style: `PLAIN` (default) or `QUOTE_SINGLE` |
-
-### Examples
-
-```bash
-# Remove common headers
-npx @expediagroup/spec-transformer --input api.yaml --output clean.yaml --headers
-
-# Remove specific headers
-npx @expediagroup/spec-transformer --input api.yaml --output clean.yaml --headers "authorization,x-api-key"
-
-# Chain transformations
-npx @expediagroup/spec-transformer --input api.yaml --output out.yaml --headers --tags my-api --endpoint /v2
-
-# Convert to Postman Collection
-npx @expediagroup/spec-transformer --input api.yaml --output collection.json --postman
-```
-
 ## Supported Formats
 
 | Format | Reader | Writer |
@@ -288,7 +229,7 @@ Tests enforce a 90% coverage threshold across statements, branches, functions, a
 
 ## License
 
-[Apache License, Version 2.0](LICENSE) - Copyright (c) Expedia Group
+This project is licensed under the [Apache License, Version 2.0](LICENSE).
 
 ---
 

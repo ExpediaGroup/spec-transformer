@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 810 160" font-family="system-ui, -apple-system, sans-serif" font-size="14">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="10" markerHeight="7" orient="auto-start-auto">
+      <path d="M 0 0 L 10 3.5 L 0 7" fill="none" stroke="#64748b" stroke-width="1.2"/>
+    </marker>
+  </defs>
+
+  <!-- Input -->
+  <rect x="10" y="55" width="100" height="50" rx="8" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="60" y="75" text-anchor="middle" font-weight="600" fill="#334155">Input</text>
+  <text x="60" y="93" text-anchor="middle" font-size="11" fill="#64748b">(YAML / JSON)</text>
+
+  <!-- Arrow 1 -->
+  <line x1="110" y1="80" x2="150" y2="80" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Reader -->
+  <rect x="155" y="55" width="90" height="50" rx="8" fill="#e0f2fe" stroke="#38bdf8" stroke-width="1.5"/>
+  <text x="200" y="85" text-anchor="middle" font-weight="600" fill="#0369a1">Reader</text>
+
+  <!-- Arrow 2 -->
+  <line x1="245" y1="80" x2="285" y2="80" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- TransformerChain box -->
+  <rect x="290" y="20" width="230" height="120" rx="10" fill="#fefce8" stroke="#facc15" stroke-width="1.5" stroke-dasharray="6 3"/>
+  <text x="405" y="42" text-anchor="middle" font-size="11" font-weight="600" fill="#a16207">TransformerChain</text>
+
+  <!-- T1 -->
+  <rect x="305" y="58" width="50" height="40" rx="6" fill="#fef9c3" stroke="#eab308" stroke-width="1.2"/>
+  <text x="330" y="83" text-anchor="middle" font-weight="600" font-size="13" fill="#854d0e">T1</text>
+
+  <!-- Arrow T1->T2 -->
+  <line x1="355" y1="78" x2="375" y2="78" stroke="#64748b" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- T2 -->
+  <rect x="380" y="58" width="50" height="40" rx="6" fill="#fef9c3" stroke="#eab308" stroke-width="1.2"/>
+  <text x="405" y="83" text-anchor="middle" font-weight="600" font-size="13" fill="#854d0e">T2</text>
+
+  <!-- Arrow T2->TN -->
+  <line x1="430" y1="78" x2="450" y2="78" stroke="#64748b" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- TN -->
+  <rect x="455" y="58" width="50" height="40" rx="6" fill="#fef9c3" stroke="#eab308" stroke-width="1.2"/>
+  <text x="480" y="83" text-anchor="middle" font-weight="600" font-size="13" fill="#854d0e">TN</text>
+
+  <!-- Arrow 3 -->
+  <line x1="520" y1="80" x2="555" y2="80" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Writer -->
+  <rect x="560" y="55" width="90" height="50" rx="8" fill="#e0f2fe" stroke="#38bdf8" stroke-width="1.5"/>
+  <text x="605" y="85" text-anchor="middle" font-weight="600" fill="#0369a1">Writer</text>
+
+  <!-- Arrow 4 -->
+  <line x1="650" y1="80" x2="690" y2="80" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Output -->
+  <rect x="695" y="55" width="100" height="50" rx="8" fill="#f0fdf4" stroke="#4ade80" stroke-width="1.5"/>
+  <text x="745" y="75" text-anchor="middle" font-weight="600" fill="#166534">Output</text>
+  <text x="745" y="93" text-anchor="middle" font-size="11" fill="#64748b">(YAML / JSON)</text>
+
+  <!-- Ellipsis between T2 and TN label -->
+  <text x="443" y="110" text-anchor="middle" font-size="10" fill="#a16207">...</text>
+</svg>

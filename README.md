@@ -2,29 +2,50 @@
 
 [![npm version](https://img.shields.io/npm/v/@expediagroup/spec-transformer)](https://www.npmjs.com/package/@expediagroup/spec-transformer)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
-[![Build](https://img.shields.io/github/actions/workflow/status/ExpediaGroup/spec-transformer/release.yaml?branch=main)](https://github.com/ExpediaGroup/spec-transformer/actions)
+[![Build](https://img.shields.io/github/actions/workflow/status/ExpediaGroup/spec-transformer/release.yml?branch=main)](https://github.com/ExpediaGroup/spec-transformer/actions)
 
-A composable pipeline for transforming OpenAPI 3.0 specifications.
+Maintained by [@mohnoor94](https://github.com/mohnoor94) | [Expedia Group](https://github.com/ExpediaGroup)
 
-- Strip unwanted HTTP headers before publishing API docs
-- Prepend path prefixes for API gateway routing
-- Consolidate tags for unified documentation portals
-- Auto-generate `oneOf` discriminator patterns for polymorphic schemas
-- Convert OpenAPI specs to Postman Collections
+A composable, pluggable pipeline for transforming OpenAPI 3.0 specifications. Chain multiple transformers together to clean, reshape, and convert your API specs in a single pass - no manual editing required.
 
-Available as a TypeScript library and a CLI.
+- **Clean up specs for publishing** - strip unwanted HTTP headers (`Authorization`, `Content-Type`, etc.) before exposing API docs externally
+- **Route through API gateways** - prepend path prefixes to all endpoints automatically
+- **Unify documentation portals** - consolidate or replace tags across operations
+- **Fix polymorphic schemas** - auto-generate `oneOf` discriminator arrays so tools like Swagger UI render inheritance correctly
+- **Export to Postman** - convert any OpenAPI spec into a ready-to-import Postman Collection v2.1, with folder-by-tag organization and example parameters
+
+Available as a TypeScript library and a CLI. Zero config for common use cases - just pipe your spec through and go.
 
 ## Architecture
 
 ```mermaid
-flowchart LR
-    Input["Input\n(YAML / JSON)"] --> Reader
-    Reader --> Chain
-    subgraph Chain [TransformerChain]
-        T1[T1] --> T2[T2] --> TN[... TN]
+flowchart TB
+    Input["fa:fa-file-code Input\n YAML / JSON"]:::io
+    Reader["fa:fa-book-open Reader"]:::process
+    Writer["fa:fa-pen-nib Writer"]:::process
+    Output["fa:fa-file-export Output\n YAML / JSON"]:::io
+
+    Input --> Reader
+
+    subgraph chain [" TransformerChain "]
+        direction TB
+        H["fa:fa-filter HeaderRemoval"]:::transformer
+        E["fa:fa-route Endpoint"]:::transformer
+        T["fa:fa-tags Tags"]:::transformer
+        OT["fa:fa-id-card OperationIdsToTags"]:::transformer
+        O["fa:fa-sitemap OneOf"]:::transformer
+        P["fa:fa-paper-plane Postman"]:::transformer
     end
-    Chain --> Writer
-    Writer --> Output["Output\n(YAML / JSON)"]
+
+    Reader --> chain --> Writer --> Output
+    Output -.- Note["OpenAPI spec or\nPostman Collection"]:::note
+
+    classDef io fill:#e8f4f8,stroke:#2196F3,stroke-width:2px,color:#1565C0
+    classDef note fill:#fffde7,stroke:#FFC107,stroke-width:1.5px,color:#F57F17,font-style:italic
+    classDef process fill:#fff3e0,stroke:#FF9800,stroke-width:2px,color:#E65100
+    classDef transformer fill:#f3e5f5,stroke:#9C27B0,stroke-width:1.5px,color:#6A1B9A,stroke-dasharray: 4 2
+
+    style chain fill:#fafafa,stroke:#9C27B0,stroke-width:2px,stroke-dasharray: 5 5,color:#6A1B9A
 ```
 
 ## Transformers
@@ -39,6 +60,8 @@ flowchart LR
 | `PostmanTransformer` | Converts an OpenAPI spec into a Postman Collection v2.1. |
 
 ## Installation
+
+Requires Node.js >= 18.
 
 ```bash
 npm install @expediagroup/spec-transformer
@@ -90,6 +113,8 @@ const chain = new TransformerChain([
 
 const result = chain.transform(specs, new YamlReader(), new YamlWriter());
 ```
+
+> **JSON input/output:** Swap in `JsonReader` and `JsonWriter` for JSON specs - the API is identical.
 
 ### In-memory objects
 
@@ -143,6 +168,34 @@ paths:
           in: header
 ```
 
+### Endpoint Prefixing
+
+All paths are prepended with the given prefix:
+
+**Before:**
+
+```yaml
+paths:
+  /operation1:
+    get:
+      summary: Get operation1
+  /operation2:
+    post:
+      summary: Post operation2
+```
+
+**After** (with `new EndpointTransformer('/v2')`):
+
+```yaml
+paths:
+  /v2/operation1:
+    get:
+      summary: Get operation1
+  /v2/operation2:
+    post:
+      summary: Post operation2
+```
+
 ### OneOf Discriminator
 
 A `$ref` pointing to a parent schema with a discriminator is replaced with a `oneOf` array of its leaf types:
@@ -187,6 +240,7 @@ npx @expediagroup/spec-transformer --help
 
 | Flag | Description |
 | --- | --- |
+| `--version` | Show version number |
 | `--input [path]` | Input file path |
 | `--inputFormat [value]` | Input format: `json` or `yaml` (default: `yaml`) |
 | `--output [path]` | Output file path |
@@ -234,7 +288,7 @@ Tests enforce a 90% coverage threshold across statements, branches, functions, a
 
 ## License
 
-This project is licensed under the [Apache License, Version 2.0](LICENSE).
+[Apache License, Version 2.0](LICENSE) - Copyright (c) Expedia Group
 
 ---
 

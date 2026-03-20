@@ -19,6 +19,11 @@
             "release": "patch"
           },
           {
+            "type": "docs",
+            "section": "Documentation",
+            "release": "patch"
+          },
+          {
             "type": "no-release",
             "release": false
           }

@@ -1,5 +1,7 @@
 # Spec Transformer
 
+Maintained by [Mohammad Noor Abu Khleif](https://github.com/mohnoor94) | [Expedia Group](https://github.com/ExpediaGroup)
+
 [![npm version](https://img.shields.io/npm/v/@expediagroup/spec-transformer)](https://www.npmjs.com/package/@expediagroup/spec-transformer)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Build](https://img.shields.io/github/actions/workflow/status/ExpediaGroup/spec-transformer/release.yml?branch=main)](https://github.com/ExpediaGroup/spec-transformer/actions)
@@ -230,9 +232,3 @@ Tests enforce a 90% coverage threshold across statements, branches, functions, a
 ## License
 
 This project is licensed under the [Apache License, Version 2.0](LICENSE).
-
----
-
-## Development Team
-- [Mohammad Noor Abu Khleif](https://github.com/mohnoor94)
-- [Osama Salman](https://github.com/osama-salman99)

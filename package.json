@@ -38,7 +38,7 @@
   "dependencies": {
     "commander": "14.0.3",
     "js-yaml": "4.1.1",
-    "openapi-to-postmanv2": "5.8.0",
+    "openapi-to-postmanv2": "6.0.0",
     "openapi3-ts": "4.5.0",
     "yaml": "2.8.2"
   },

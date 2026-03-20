@@ -18,7 +18,7 @@ import Transformer from './Transformer';
 import { Key, Value } from '../model/Types';
 
 import * as converter from 'openapi-to-postmanv2';
-import { Input, Options } from 'openapi-to-postmanv2';
+import type { Options, CollectionResult } from 'openapi-to-postmanv2';
 
 /**
  * PostmanTransformer class implements the Transformer interface to convert
@@ -26,19 +26,16 @@ import { Input, Options } from 'openapi-to-postmanv2';
  */
 export class PostmanTransformer implements Transformer {
   transform(specs: Record<Key, Value>): Record<Key, Value> {
-    // @ts-ignore
-    const input: Input = { type: 'json', data: specs };
+    const input = { type: 'json' as const, data: specs };
 
     const options: Options = {
       folderStrategy: 'Tags',
-      requestParametersResolution: 'Example',
-      exampleParametersResolution: 'Example',
-      optimizeConversion: false,
+      parametersResolution: 'Example',
       stackLimit: 50,
     };
 
     let result: Record<Key, Value> = {};
-    converter.convert(input, options, (err: unknown, conversionResult: Record<Key, Value>) => {
+    converter.convert(input, options, (err, conversionResult?: CollectionResult) => {
       if (err || !conversionResult || !conversionResult.result) {
         console.warn('Error transforming to Postman collection', {
           error: err,
@@ -46,7 +43,7 @@ export class PostmanTransformer implements Transformer {
         });
         return;
       }
-      result = conversionResult.output[0].data;
+      result = conversionResult.output![0].data as Record<Key, Value>;
     });
 
     return result;

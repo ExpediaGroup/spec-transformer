@@ -40,7 +40,7 @@
     "js-yaml": "4.2.0",
     "openapi-to-postmanv2": "6.1.0",
     "openapi3-ts": "4.5.0",
-    "yaml": "2.8.3"
+    "yaml": "2.9.0"
   },
   "devDependencies": {
     "@semantic-release/commit-analyzer": "13.0.1",

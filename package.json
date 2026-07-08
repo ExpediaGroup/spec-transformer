@@ -9,6 +9,7 @@
   "main": "index.js",
   "types": "index.d.ts",
   "bin": {
+    "cli": "cli.js",
     "spec-transformer": "cli.js"
   },
   "scripts": {

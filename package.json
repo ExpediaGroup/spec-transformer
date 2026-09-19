@@ -39,8 +39,8 @@
   "dependencies": {
     "commander": "14.0.3",
     "js-yaml": "4.3.2",
-    "openapi-to-postmanv2": "6.1.0",
-    "openapi3-ts": "4.5.0",
+    "openapi-to-postmanv2": "6.3.3",
+    "openapi3-ts": "4.6.1",
     "yaml": "2.9.0"
   },
   "devDependencies": {
@@ -50,11 +50,11 @@
     "@semantic-release/release-notes-generator": "14.1.1",
     "@types/jest": "30.0.0",
     "@types/js-yaml": "4.0.9",
-    "@types/node": "24.13.2",
+    "@types/node": "24.13.4",
     "@types/openapi-to-postmanv2": "5.0.0",
     "conventional-changelog-conventionalcommits": "9.3.1",
     "jest": "30.4.2",
-    "prettier": "3.9.4",
+    "prettier": "3.9.6",
     "semantic-release": "25.0.5",
     "ts-jest": "29.4.11",
     "ts-node": "10.9.2",

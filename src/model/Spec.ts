@@ -18,7 +18,7 @@ import { Key, Ref, Value } from './Types';
 import { HEADER, PARAMETERS, PROPERTIES, REQUEST_BODY, RESPONSES, TAGS } from '../Constants';
 import { filter, map } from '../collection/Functions';
 import { Server } from 'openapi3-ts';
-import { TagObject } from 'openapi3-ts/dist/model/openapi31';
+import type { TagObject } from 'openapi3-ts/oas31';
 
 /**
  * A representation of API Specifications.

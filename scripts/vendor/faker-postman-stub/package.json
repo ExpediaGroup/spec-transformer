@@ -1,0 +1,11 @@
+{
+  "name": "@faker-js/faker",
+  "version": "10.6.0",
+  "private": true,
+  "description": "Stand-in for @faker-js/faker in postman-collection subtree to resolve GHSA-qxc2-j82w-r537",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./locale/en": "./index.js"
+  }
+}

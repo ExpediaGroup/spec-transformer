@@ -36,6 +36,11 @@
     "access": "public"
   },
   "license": "Apache-2.0",
+  "overrides": {
+    "postman-collection": {
+      "@faker-js/faker": "file:../../scripts/vendor/faker-postman-stub"
+    }
+  },
   "dependencies": {
     "commander": "15.0.0",
     "js-yaml": "4.3.2",
@@ -68,6 +73,13 @@
     "preset": "ts-jest",
     "testEnvironment": "node",
     "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/**/*.ts",
+      "index.ts"
+    ],
+    "modulePathIgnorePatterns": [
+      "<rootDir>/dist/"
+    ],
     "coverageReporters": [
       "json",
       "text",

@@ -36,6 +36,12 @@
     "access": "public"
   },
   "license": "Apache-2.0",
+  "overrides": {
+    "js-yaml": "4.3.2",
+    "openapi-to-postmanv2": {
+      "yaml": "1.10.3"
+    }
+  },
   "dependencies": {
     "commander": "15.0.0",
     "js-yaml": "4.3.2",
@@ -68,6 +74,9 @@
     "preset": "ts-jest",
     "testEnvironment": "node",
     "collectCoverage": true,
+    "modulePathIgnorePatterns": [
+      "<rootDir>/dist/"
+    ],
     "coverageReporters": [
       "json",
       "text",
